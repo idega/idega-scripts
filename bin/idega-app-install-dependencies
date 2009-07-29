@@ -14,5 +14,5 @@ then
 	httpd-install
 	mysql-install
 else
-	echo "Java already installed"
+	echo "Everyting already installed"
 fi

@@ -1,0 +1,27 @@
+#!/bin/sh
+printf '#############################################################################################\n'
+printf '# A script to unban an ip that has been banned by fail2ban                                  #\n'
+printf '# RUN AS ROOT                                                                               #\n'
+printf '# fail2ban website : http://www.fail2ban.org                                                #\n'
+printf '# Adapted by Eirikur Hrafnsson (eiki@idega.com) 2009		  		                        #\n'
+printf '#															  		                        #\n'
+printf '# How this works		  		  		                        							#\n'
+printf '# iptables -L		  		                        										#\n'
+printf '# look at the Chain fail2ban-ssh		  		                        					#\n'
+printf '# notice the ip address to unban and count at which line number this is.		  	        #\n'
+printf '# e.g.:		  		                        												#\n'
+printf '# Chain fail2ban-ssh (1 references)		  		                        					#\n'
+printf '# target prot opt source destination 		  		                        				#\n'
+printf '# DROP 0 -- 61.236.117.xxx anywhere 		  		                        				#\n'
+printf '# DROP 0 -- 61.236.117.yyy anywhere		  		                        					#\n'
+printf '# RETURN 0 -- anywhere anywhere 		  		                        					#\n'
+printf '# execute the following command:		  		                        					#\n'
+printf '# iptables -D fail2ban-ssh <linenum>		  		                        				#\n'
+printf '# if you want to unban user 61.236.117.yyy use:		  		                      		    #\n'
+printf '# iptables -D fail2ban-ssh 2		  		                        						#\n'
+printf '#############################################################################################\n'
+printf '\n'
+
+iptables -L
+read -p 'Enter the entry number of the ip you want to unban counting from the first ip number within the fail2ban-SSH chain (first is 1): ' linenumber
+iptables -D fail2ban-SSH $linenumber

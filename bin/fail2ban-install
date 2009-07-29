@@ -1,0 +1,43 @@
+#!/bin/sh
+printf '#############################################################################################\n'
+printf '# A script to install and default configure (my template) fail2ban server hack protection. #\n'
+printf '# The default settings work fine for apache attacks and ssh, see /etc/fail2ban/jail.conf    #\n'
+printf '# RUN AS ROOT                                                                               #\n'
+printf '# fail2ban website : http://www.fail2ban.org                                                #\n'
+printf '# By Eirikur Hrafnsson (eiki@idega.com) 2009		  		                                #\n'
+printf '#############################################################################################\n'
+printf '\n'
+
+printf 'Installing gamin-python \n'
+yum install gamin-python
+printf 'Installing shorewall \n'
+wget http://www.invoca.ch/pub/packages/shorewall/4.0/shorewall-4.0.9/shorewall-shell-4.0.9-3.noarch.rpm
+wget http://www.invoca.ch/pub/packages/shorewall/4.0/shorewall-4.0.9/shorewall-perl-4.0.9-3.noarch.rpm
+wget http://www.invoca.ch/pub/packages/shorewall/4.0/shorewall-4.0.9/shorewall-4.0.9-3.noarch.rpm
+rpm -i shorewall-perl-4.0.9-3.noarch.rpm shorewall-shell-4.0.9-3.noarch.rpm shorewall-4.0.9-3.noarch.rpm
+printf 'Installing fail2ban \n'
+wget http://dl.atrpms.net/all/fail2ban-0.8.3-18.el5.noarch.rpm
+rpm -i fail2ban-0.8.3-18.el5.noarch.rpm
+printf 'Replacing default jail.conf with my config template \n'
+cp -f ../templates/fail2ban-jail.conf /etc/fail2ban/jail.conf
+printf 'Starting fail2ban and adding to default startup \n'
+fail2ban-server 
+fail2ban-client	reload
+fail2ban-client	status
+chkconfig fail2ban on
+printf 'Fail2ban should be installed and running now \n'
+
+#6, Configure: edit jail.conf file replace generic email with your email:
+#vi /etc/fail2ban/jail.conf
+#vi /etc/fail2ban/action.d/mail.conf
+#dest = xx@gmail.com
+#7, Testing:
+#fail2ban-client -d
+#8, Start fail2ban:
+#fail2ban-client start
+#9, restart fail2ban:
+#fail2ban-client reload
+#10, make fail2ban to start on boot:
+#chkconfig fail2ban on
+#11, check log file
+#more /var/log/fail2ban.log

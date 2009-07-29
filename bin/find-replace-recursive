@@ -1,0 +1,22 @@
+#!/bin/sh
+
+printf '###########################################################################################################\n'
+printf '# A script to recursively find and replace a piece of text for a specified file filename pattern.         #\n'
+printf '# "*" file pattern would select all files from the current folder and all sub folders. Uses find and sed. #\n'
+printf '# By Eirikur Hrafnsson, eiki@idega.com, Idega Software 2009                                               #\n'
+printf '###########################################################################################################\n'
+printf '\n'
+
+read -p 'Enter filename pattern : ' filenamepattern
+read -p 'Enter old text to replace : ' oldText
+read -p 'Enter new text to replace with : ' newText
+
+find . -type f -name $filenamepattern -print	| 
+	while read filename
+       do
+       (
+        echo $filename
+        sed "s/$oldText/$newText/g;" $filename> $filename.tempfile
+        mv $filename.tempfile $filename  # replace output files with original
+       )
+done

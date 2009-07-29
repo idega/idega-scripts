@@ -1,0 +1,10 @@
+#!/bin/sh
+printf '#############################################################################################\n'
+printf '# A script to block an ip to the server using IPTABLES, takes in one argument, the ip.		#\n'
+printf '# By Eirikur Hrafnsson (eiki@idega.com) 2009		  		                                #\n'
+printf '#############################################################################################\n'
+printf '\n'
+
+iptables -L
+iptables -A INPUT -s $1 -j DROP
+iptables -L

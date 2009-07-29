@@ -11,6 +11,7 @@ if [[ ! -e /etc/init.d/httpd ]]
 then
 	echo "Setting up Apache httpd"
 	yum -y install httpd
+	/etc/init.d/httpd start
 else
 	echo "Apache httpd already installed"
 fi

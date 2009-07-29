@@ -1,0 +1,18 @@
+#!/bin/sh
+
+printf '#####################################################################\n'
+printf '# A script to setup the Dependent software for running idega        #\n'
+printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009                      #\n'
+printf '#####################################################################\n'
+printf '\n'
+
+#Tested on CentOS 5.3
+if [[ -z $IDEGA_HOME ]]
+then
+	java-install
+	mvn-install
+	httpd-install
+	mysql-install
+else
+	echo "Java already installed"
+fi

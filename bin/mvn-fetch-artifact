@@ -13,7 +13,7 @@ opt = nil
 ARGV.options {
   |opt|
 
-  opt.banner = "Usage:\n\tmvnfetch.rb [options]"
+  opt.banner = "Usage:\n\mvn-fetch-artifact [options]"
 
   opt.on("Options:\n")
   opt.on("-a artifactId", "--artifactId", String, "Maven artifactId [REQUIRED]") { |setup['artifactId']|}

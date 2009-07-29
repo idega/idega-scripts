@@ -1,0 +1,16 @@
+#!/bin/sh
+
+printf '#############################################################\n'
+printf '# A script to setup the MySQL Database server				#\n'
+printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009				#\n'
+printf '#############################################################\n'
+printf '\n'
+
+#Tested on CentOS 5.3
+if [[ ! -e /etc/init.d/mysqld ]]
+then
+	echo "Setting up MySQL"
+	yum -y install mysqld
+else
+	echo "MySQL already installed"
+fi

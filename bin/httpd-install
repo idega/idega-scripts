@@ -1,0 +1,16 @@
+#!/bin/sh
+
+printf '#############################################################\n'
+printf '# A script to setup the Apache Httpd server					#\n'
+printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009				#\n'
+printf '#############################################################\n'
+printf '\n'
+
+#Tested on CentOS 5.3
+if [[ ! -e /etc/init.d/httpd ]]
+then
+	echo "Setting up Apache httpd"
+	yum -y install httpd
+else
+	echo "Apache httpd already installed"
+fi

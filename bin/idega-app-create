@@ -86,7 +86,6 @@ if [ $VERBOSE -eq 0 ]; then
 			fi
 	else
 		SERVERNUMBER="1"
-		
 	fi
 fi
 

@@ -13,7 +13,7 @@ then
 	if [ ! -e "/etc/yum.repos.d/utterramblings.repo" ]; then
 		rpm --import http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka
 		echo -ne "name=Jason's Utter Ramblings Repo\n" >> /etc/yum.repos.d/utterramblings.repo
-		echo -ne "baseurl=http://www.jasonlitka.com/media/EL$releasever/$basearch/\n" >> /etc/yum.repos.d/utterramblings.repo
+		echo -ne "baseurl=http://www.jasonlitka.com/media/EL\$releasever/\$basearch/\n" >> /etc/yum.repos.d/utterramblings.repo
 		echo -ne "enabled=1\n" >> /etc/yum.repos.d/utterramblings.repo
 		echo -ne "gpgcheck=1\n" >> /etc/yum.repos.d/utterramblings.repo
 		echo -ne "gpgkey=http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka\n" >> /etc/yum.repos.d/utterramblings.repo

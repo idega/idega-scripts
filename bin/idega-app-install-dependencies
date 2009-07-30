@@ -6,13 +6,43 @@ printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009                      #\n'
 printf '#####################################################################\n'
 printf '\n'
 
+usage()
+{
+cat << EOF
+
+   Usage: $0 VERSION [options]
+
+   A script to install all software required for idega
+
+ OPTIONS:
+   -h      	Show this message
+   -p      	MySQL Root password
+EOF
+}
+
+while getopts “hs” OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit 1
+             ;;
+         p)
+             MYSQLROOTPW=$OPTARG
+             ;;
+         ?)
+             usage
+             exit
+             ;;
+     esac
+done
+
 #Tested on CentOS 5.3
-if [[ -z $IDEGA_HOME ]]
-then
 	java-install
 	mvn-install
 	httpd-install
-	mysql-install
-else
-	echo "Everyting already installed"
-fi
+	if [ -z $MYSQLROOTPW ]; then
+		mysql-install
+	else
+		mysql-install -p $MYSQLROOTPW
+	fi

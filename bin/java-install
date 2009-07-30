@@ -1,8 +1,8 @@
 #!/bin/sh
 
 printf '#############################################################\n'
-printf '# A script to setup the Java environment					#\n'
-printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009				#\n'
+printf '# A script to setup the Java environment                    #\n'
+printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009              #\n'
 printf '#############################################################\n'
 printf '\n'
 

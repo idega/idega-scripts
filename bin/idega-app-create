@@ -6,7 +6,6 @@ printf '# By Eirikur Hrafnsson (eiki@idega.com), Tryggvi Larusson (tryggvi@idega
 printf '########################################################################################################\n'
 printf '\n'
 
-
 usage()
 {
 cat << EOF
@@ -16,11 +15,13 @@ cat << EOF
     A script to setup a new idega app.
 
   OPTIONS:
-   -h			Show this message
-   -s [name]		Server Name
-   -n [nubmer]  	Server number [1..99]
-   -a [artifactId]	App name (maven artifactId - default lucid)
-   -g [groupId]		App Group (maven artifactId - default com.idega.webapp.product)
+   -h               Show this message
+   -s [name]        Server Name
+   -p [password]    MySQL Root password
+   -b [folderpath]  Base Folder Path for idega/tomcats installation
+   -n [nubmer]      Server number [1..99]
+   -a [artifactId]  App name (maven artifactId - default lucid)
+   -g [groupId]     App Group (maven artifactId - default com.idega.webapp.product)
 
 EOF
 }
@@ -28,7 +29,7 @@ EOF
 
 VERBOSE=1
 LASTSERVERNUMBER=0
-while getopts “hs:n:a:g:” OPTION
+while getopts “hs:p:n:a:g:” OPTION
 do
      case $OPTION in
          h)
@@ -37,6 +38,12 @@ do
              ;;
          s)
              SERVERNAME=$OPTARG
+             ;;
+		 p)
+             MYSQLROOTPW=$OPTARG
+             ;;
+		 b)
+             TOMCATSFOLDER=$OPTARG
              ;;
          n)
              SERVERNUMBER=$OPTARG
@@ -62,7 +69,9 @@ else
 	echo "Not in verbose mode"
 fi
 
-TOMCATSFOLDER=~/tomcat
+if [ -z $TOMCATSFOLDER ]; then
+	TOMCATSFOLDER=~/tomcat
+fi
 VIRTUALHOSTSCONFIGFILEPATH=$TOMCATSFOLDER/conf/virtualhosts.conf
 SCRIPTDIR=`dirname $0`
 echo "Script Directory Path: $SCRIPTDIR"
@@ -200,12 +209,16 @@ mv $CREATEDATABASETEMPFILENAME $CREATEDATABASEFILENAME
 replace DBPASSWORD $DBPASSWORD < $CREATEDATABASEFILENAME > $CREATEDATABASETEMPFILENAME
 mv $CREATEDATABASETEMPFILENAME $CREATEDATABASEFILENAME
 
-printf '\n'
-printf 'Enter MySQL root user password'
-printf '\n'
-mysql -uroot -p < $CREATEDATABASEFILENAME
-printf 'Database created'
-printf '\n'
+if [ -z $MYSQLROOTPW ]; then
+	printf '\n'
+	printf 'Enter MySQL root user password'
+	printf '\n'
+	mysql -uroot -p < $CREATEDATABASEFILENAME
+	printf 'Database created'
+	printf '\n'
+else
+	mysql -uroot -p$MYSQLROOTPW < $CREATEDATABASEFILENAME
+fi
 
 #Unzip,unzip and rename the custom tomcat archive
 cd $TOMCATSFOLDER

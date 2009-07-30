@@ -1,20 +1,56 @@
 #!/bin/sh
 
 printf '#############################################################\n'
-printf '# A script to setup the MySQL Database server				#\n'
-printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009				#\n'
+printf '# A script to setup the MySQL Database server               #\n'
+printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009              #\n'
 printf '#############################################################\n'
 printf '\n'
 
 SCRIPTDIR=`dirname $0`
 
+usage()
+{
+cat << EOF
+
+   Usage: $0 [options]
+
+   A script to install the mysql server on CentOS
+
+ OPTIONS:
+   -h                        Show this message
+   -p [password]             Set MySQL Root password
+EOF
+}
+
+while getopts “hp:” OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit 1
+             ;;
+         p)
+             MYSQLROOTPW=$OPTARG
+             ;;
+         ?)
+             usage
+             exit
+             ;;
+     esac
+done
+
 #Tested on CentOS 5.3
 if [[ ! -e /etc/init.d/mysqld ]]
 then
+	yum -y remove mysql mysql-server
 	echo "Setting up MySQL"
 	yum -y install mysql mysql-server
 	cp /etc/my.cnf /etc/my.cnf.original
 	cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
+	if [ -z $MYSQLROOTPW ]; then
+		read -p 'Enter new mysql root password : ' MYSQLROOTPW
+	fi
+	mysqladmin -u root password $MYSQLROOTPW
 	/etc/init.d/mysqld start
 else
 	echo "MySQL already installed"

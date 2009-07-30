@@ -28,6 +28,7 @@ ARGV.options {
 
 }
 
+
 artifactId = setup['artifactId']
 groupId = setup['groupId']
 version = setup['version']

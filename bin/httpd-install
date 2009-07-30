@@ -12,6 +12,7 @@ then
 	echo "Adding utterramblings repo"
 	if [ ! -e "/etc/yum.repos.d/utterramblings.repo" ]; then
 		rpm --import http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka
+		echo -ne "[utterramblings]\n" >> /etc/yum.repos.d/utterramblings.repo
 		echo -ne "name=Jason's Utter Ramblings Repo\n" >> /etc/yum.repos.d/utterramblings.repo
 		echo -ne "baseurl=http://www.jasonlitka.com/media/EL\$releasever/\$basearch/\n" >> /etc/yum.repos.d/utterramblings.repo
 		echo -ne "enabled=1\n" >> /etc/yum.repos.d/utterramblings.repo

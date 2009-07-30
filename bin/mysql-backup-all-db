@@ -1,0 +1,14 @@
+#!/bin/sh
+printf '#############################################################################\n'
+printf '# A script to take a backup dump of many mysql databases in UTF8 using      #\n'
+printf '# the mysql-backup-db script. Add your own databases manually. Usually this #\n'
+printf '# script is setup to be called from cron.daily 								#\n'
+printf '# By Eirikur Hrafnsson (eiki@idega.com) 2009		    	     			#\n'
+printf '#############################################################################\n'
+printf '\n'
+
+BACKUP_FOLDER=/home/idegaweb/backup/databases
+#always backup the default db
+$BACKUP_FOLDER/mysql-backup-db mysql
+#add your own databases here
+

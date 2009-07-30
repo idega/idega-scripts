@@ -1,0 +1,31 @@
+#!/bin/sh
+
+printf '#################################################################\n'
+printf '# A script to create a new database/schema in MySQL and initial #\n'
+printf '# the initial user. By Eirikur Hrafnsson (eiki@idega.com) 2009  #\n'
+printf '#################################################################\n'
+printf '\n'
+
+read -p 'Enter database name to create : ' DATABASENAME
+read -p 'Enter database user : ' DBUSER
+read -p 'Enter database password : ' DBPASSWORD
+
+#Create the database and set access rights
+CREATEDATABASEFILENAME=$DATABASENAME'-createdatabase.sql'
+CREATEDATABASETEMPFILENAME=$DATABASENAME'-createdatabase.sql.tmp'
+cp ../templates/createdatabase-template $CREATEDATABASEFILENAME
+
+replace DATABASENAME $DATABASENAME < $CREATEDATABASEFILENAME > $CREATEDATABASETEMPFILENAME
+mv $CREATEDATABASETEMPFILENAME $CREATEDATABASEFILENAME
+replace DBUSER $DBUSER < $CREATEDATABASEFILENAME > $CREATEDATABASETEMPFILENAME
+mv $CREATEDATABASETEMPFILENAME $CREATEDATABASEFILENAME
+replace DBPASSWORD $DBPASSWORD < $CREATEDATABASEFILENAME > $CREATEDATABASETEMPFILENAME
+mv $CREATEDATABASETEMPFILENAME $CREATEDATABASEFILENAME
+
+printf '\n'
+printf 'Enter MySQL root user password'
+printf '\n'
+mysql -uroot -p < $CREATEDATABASEFILENAME
+printf 'Database created'
+printf '\n'
+

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+printf '##############################################################\n'
+printf '# A script to take a backup dump of a mysql database in UTF8 #\n'
+printf '# By Eirikur Hrafnsson (eiki@idega.com) 2009		    	 #\n'
+printf '##############################################################\n'
+printf '\n'
+
+DB=$1
+BACKUP_FOLDER=/home/idegaweb/backup/databases
+#BACKUP_FOLDER=.
+mysqldump -u root -h localhost --password=PUTYOURPASSWORDHERE --character-sets-dir=/usr/share/mysql/charsets --default-character-set=utf8 --skip-extended-insert $DB | gzip -9 > $BACKUP_FOLDER/$DB-UTF8-`date +%a`.sql.gz
+
+
+

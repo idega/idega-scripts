@@ -1,1 +1,2 @@
-A collection of various scripts to help working with idega application
+A collection of various scripts to help working with idega applications and managing idega servers.
+Most of the scripts require that you are using CentOS 5.x+ or at least a Linux distribution with yum installed.

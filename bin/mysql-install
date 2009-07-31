@@ -50,8 +50,8 @@ then
 	if [ -z $MYSQLROOTPW ]; then
 		read -p 'Enter new mysql root password : ' MYSQLROOTPW
 	fi
-	mysqladmin -u root password $MYSQLROOTPW
 	/etc/init.d/mysqld start
+	mysqladmin -u root password $MYSQLROOTPW
 else
 	echo "MySQL already installed"
 fi

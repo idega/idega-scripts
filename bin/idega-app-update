@@ -1,7 +1,5 @@
 #!/bin/sh
 
-TOMCATDIR=`pwd`
-
 usage()
 {
 cat << EOF
@@ -16,8 +14,10 @@ cat << EOF
    A script to update an existing idega app.
 
  OPTIONS:
-   -h      		Show this message
-   -s      		(Use SSH to fetch war update)
+   -h                               Show this message
+   -b [base idega tomcats path]     Path to the applications tomcat dir
+   -s [app/servername]              Path to the applications tomcat dir 
+   -s                               (Use SSH to fetch war update)
 EOF
 }
 
@@ -41,6 +41,12 @@ do
          s)
              USE_SSH=1
              ;;
+         s)
+             SERVERNAME=$OPTARG
+             ;;
+		 b)
+             TOMCATSFOLDER=$OPTARG
+             ;;
          ?)
              usage
              exit
@@ -48,6 +54,17 @@ do
      esac
 done
 
+if [ -z $TOMCATSFOLDER ]; then
+	TOMCATSFOLDER=~/tomcat
+fi
+
+if [ ! -z $SERVERNAME ]; then
+	TOMCATDIR=$TOMCATSFOLDER/$SERVERNAME
+fi
+
+if [ -z $TOMCATDIR ]; then
+	TOMCATDIR=`pwd`
+fi
 
 if [ -e idega.properties ]; then
 	WEBAPPNAME=`sed '/^\#/d' idega.properties | grep 'artifactId'  | tail -n 1 | sed 's/^.*=//'`
@@ -59,7 +76,7 @@ if [ -e idega.properties ]; then
 	fi
 	#WEBAPPGROUP="com.idega.webapp.custom"
 else
-	echo "You have to be inside a tomcat folder with idega.properties"
+	echo "You have to be inside a tomcat folder with idega.properties or pass the appname as -s parameter"
 	exit 0
 fi
 

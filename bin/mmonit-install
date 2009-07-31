@@ -1,0 +1,34 @@
+#!/bin/sh
+
+printf '#############################################################\n'
+printf '# A script to setup the M/Monit management application      #\n'
+printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009              #\n'
+printf '#############################################################\n'
+printf '\n'
+
+VERSION="2.0.3"
+groupadd -r mmonit
+useradd -r -d /usr/local/mmonit -m -g mmonit mmonit
+chmod 750 /usr/local/mmonit
+su - mmonit
+ARCH=`uname -m`
+OS=`uname`
+
+if [ $ARCH == "x86_64" ]; then
+	ARCH="x64"
+elif [ $ARCH == "i386" ]; then
+	ARCH="x86"	
+elif [ $ARCH == "i586" ]; then
+	ARCH="x86"	
+elif [ $ARCH == "i686" ]; then
+	ARCH="x86"
+fi
+
+if [ $OS == "Linux" ]; then
+	OS="linux"
+fi
+
+wget http://mmonit.com/dist/mmonit-$VERSION-$OS-$ARCH.tar.gz
+tar -xzf mmonit-$VERSION-$OS-$ARCH.tar.gz
+cd mmonit-$VERSION
+./bin/mmonit

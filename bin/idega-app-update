@@ -17,17 +17,17 @@ cat << EOF
    -h                               Show this message
    -b [base idega tomcats path]     Path to the applications tomcat dir
    -s [app/servername]              Path to the applications tomcat dir 
-   -s                               (Use SSH to fetch war update)
+   -p [ssh/maven]                   Protocol to fetch war [ssh/maven] default is maven
 EOF
 }
 
-if [ $1 == "-s" ]; then
-	VERSION=$2
-elif [ $2="-s" ]; then
-	VERSION=$1
-else
-	VERSION=$1
-fi
+#if [ $1 == "-s" ]; then
+#	VERSION=$2
+#elif [ $2="-s" ]; then
+#	VERSION=$1
+#else
+#	VERSION=$1
+#fi
 
 USE_SSH=0
 VERBOSE=
@@ -38,8 +38,8 @@ do
              usage
              exit 1
              ;;
-         s)
-             USE_SSH=1
+         p)
+             PROTOCOL=$OPTARG
              ;;
          s)
              SERVERNAME=$OPTARG
@@ -53,6 +53,10 @@ do
              ;;
      esac
 done
+
+if [ -z $PROTOCOL ]; then
+	PROTOCOL="maven"
+fi
 
 if [ -z $TOMCATSFOLDER ]; then
 	TOMCATSFOLDER=~/tomcat
@@ -88,10 +92,10 @@ cd $TOMCATDIR/../
 
 WARFILENAME=$WEBAPPNAME-$VERSION.war
 if [ ! -e $WARFILENAME ]; then
-	if [ -z $USE_SSH ]; then
+	if [ $PROTOCOL == "maven" ]; then
 		echo "Using Maven to fetch $WARFILENAME\n"
 		mvn-fetch-artifact -g $WEBAPPGROUP -a $WEBAPPNAME -v $VERSION -t war
-	else
+	elif [ $PROTOCOL == "ssh" ]; then
 		echo "Using SSH to fetch $WARFILENAME\n"
 		scp idegaweb@build.idega.is:/home/idegaweb/platform4/$WEBAPPGROUP/$WEBAPPNAME/target/$WEBAPPNAME-$VERSION.war .	
 	fi

@@ -326,7 +326,7 @@ else
 fi
 		
 #cd $SERVERNAME
-idega-app-update $WEBAPPVERSION -s
+idega-app-update $WEBAPPVERSION -p ssh
 
 #Reload config files without severing connections to running processes
 #TODO MAKE SUDOERS WORK

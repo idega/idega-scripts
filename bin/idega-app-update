@@ -21,17 +21,12 @@ cat << EOF
 EOF
 }
 
-#if [ $1 == "-s" ]; then
-#	VERSION=$2
-#elif [ $2="-s" ]; then
-#	VERSION=$1
-#else
-#	VERSION=$1
-#fi
+VERSION=$1
+
 
 USE_SSH=0
 VERBOSE=
-while getopts “hs” OPTION
+while getopts “hp:s:b:” OPTION
 do
      case $OPTION in
          h)

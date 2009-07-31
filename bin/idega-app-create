@@ -188,7 +188,7 @@ JMXPORT=$(($AJPPORT-100))
 
 #tomcat/conf/virtualhost.conf
 if [ -z $SERVERALIASES ]; then
-	$SERVERALIASES=$SERVERNAME
+	SERVERALIASES=$SERVERNAME
 fi
 
 #tomcats/conf/virtualhosts.conf
@@ -330,7 +330,7 @@ idega-app-update $WEBAPPVERSION -p ssh
 
 #Reload config files without severing connections to running processes
 #TODO MAKE SUDOERS WORK
-printf 'NOW restart apache manually with : apachectl graceful'
+printf '\nNOW restart apache manually with : apachectl graceful\n\n'
 #sudo apachectl graceful
 
 printf "Done setting up and now starting the tomcat server: $SERVERNAME\n"

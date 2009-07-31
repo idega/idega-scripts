@@ -188,7 +188,7 @@ JMXPORT=$(($AJPPORT-100))
 
 #tomcat/conf/virtualhost.conf
 if [ -z $SERVERALIASES ]; then
-	SERVERALIASES=$SERVERNAME
+	SERVERALIASES=www.$SERVERNAME
 fi
 
 #tomcats/conf/virtualhosts.conf

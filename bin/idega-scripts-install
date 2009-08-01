@@ -1,0 +1,16 @@
+#!/bin/sh
+
+su -c 'rpm -Uvh http://download.fedora.redhat.com/pub/epel/5/i386/epel-release-5-3.noarch.rpm'
+yum -y install git ruby
+cd /usr/local
+if [ ! -e "idega-scripts" ]; then
+	git clone git://github.com/idega/idega-scripts.git
+else
+	cd idega-scripts
+	git pull
+fi
+echo -e "export IDEGA_SCRIPTS_HOME=/usr/local/idega-scripts\nexport PATH=\$PATH:\$IDEGA_SCRIPTS_HOME/bin" > /etc/profile.d/idega-scripts.sh
+chmod 755 /etc/profile.d/idega-scripts.sh
+sed 's/#PermitUserEnvironment no/PermitUserEnvironment yes/g' /etc/ssh/sshd_config > /etc/ssh/sshd_config.tmp
+mv -f /etc/ssh/sshd_config.tmp /etc/ssh/sshd_config
+/etc/init.d/sshd reload

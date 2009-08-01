@@ -6,6 +6,8 @@ printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009              #\n'
 printf '#############################################################\n'
 printf '\n'
 
+SCRIPTDIR=`dirname $0`
+
 #Tested on CentOS 5.3
 if [[ -z $MAVEN2_HOME ]]
 then
@@ -16,6 +18,8 @@ then
 	ln -s apache-maven-2.2.0 maven2
 	echo -e "export MAVEN2_HOME=/usr/local/maven2\nexport PATH=\$PATH:\$MAVEN2_HOME/bin" > /etc/profile.d/maven2.sh
 	chmod 755 /etc/profile.d/maven2.sh
+	mkdir ~/.m2
+	cp $SCRIPTDIR/settings.xml ~/.m2/settings.xml
 else
 	echo "Maven already installed"
 fi

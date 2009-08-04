@@ -66,7 +66,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		
 		#wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.7.tar.gz/from/http://mysql.rhnet.is/
 		
-		rpm -i MySQL-server-community-5.1.36-0.rhel5.$ARCH.rp
+		rpm -i MySQL-server-community-5.1.36-0.rhel5.$ARCH.rpm
 	    rpm -i MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
 		#rpm -i MySQL-shared-community-5.1.36-0.rhel5.$ARCH.rpm
 	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm 

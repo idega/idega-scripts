@@ -7,7 +7,7 @@ printf '#############################################################\n'
 printf '\n'
 
 SCRIPTDIR=`dirname $0`
-
+INSTALL_MYSQL_CUSTOM="n"
 usage()
 {
 cat << EOF
@@ -18,11 +18,12 @@ cat << EOF
 
  OPTIONS:
    -h                        Show this message
+   -c                        Install Custom (Community) version of MySQL 5.1
    -p [password]             Set MySQL Root password
 EOF
 }
 
-while getopts “hp:” OPTION
+while getopts “hp:c” OPTION
 do
      case $OPTION in
          h)
@@ -32,6 +33,8 @@ do
          p)
              MYSQLROOTPW=$OPTARG
              ;;
+         c)
+         	INSTALL_MYSQL_CUSTOM="y"
          ?)
              usage
              exit
@@ -40,18 +43,56 @@ do
 done
 
 #Tested on CentOS 5.3
-if [[ ! -e /etc/init.d/mysqld ]]
-then
-	yum -y remove mysql mysql-server
-	echo "Setting up MySQL"
-	yum -y install mysql mysql-server
-	cp /etc/my.cnf /etc/my.cnf.original
-	cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
-	if [ -z $MYSQLROOTPW ]; then
-		read -p 'Enter new mysql root password : ' MYSQLROOTPW
+if [ ! -e /etc/init.d/mysqld ]; then
+	if [ $INSTALL_MYSQL_CUSTOM == "y" ]; then
+		#remove old
+		yum remove mysql
+		
+		#install new
+		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-server-community-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
+		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-client-community-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
+		
+		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-shared-compat-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
+		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-client-community-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
+		
+		#wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.7.tar.gz/from/http://mysql.rhnet.is/
+		
+		rpm -i MySQL-server-community-5.1.30-0.rhel5.i386.rpm 
+	    rpm -i MySQL-shared-compat-5.1.30-0.rhel5.i386.rpm 
+	    rpm -i MySQL-client-community-5.1.30-0.rhel5.i386.rpm
+	
+		cp /etc/my.cnf /etc/my.cnf.original
+		cp mysql-my.cnf /etc/my.cnf
+	
+		service mysqld stop
+			
+		OLDPID=/var/run/mysqld/mysqld.pid
+		NEWPID=/var/lib/mysql/mysqld.pid
+		
+		replace $OLDPID $NEWPID < /etc/rc.d/init.d/mysqld > /etc/rc.d/init.d/mysqld.temp
+		mv /etc/rc.d/init.d/mysqld.temp /etc/rc.d/init.d/mysqld
+		chmod 755 /etc/rc.d/init.d/mysqld
+		touch /var/lib/mysql/mysqld.pid
+		chown mysql:mysql /var/lib/mysql/mysqld.pid
+	
+		service mysqld start
+		
+		if [ -z $MYSQLROOTPW ]; then
+			read -p 'Enter new mysql root password : ' MYSQLROOTPW
+		fi
+		mysqladmin -u root password $MYSQLROOT
+	else
+		yum -y remove mysql mysql-server
+		echo "Setting up MySQL"
+		yum -y install mysql mysql-server
+		cp /etc/my.cnf /etc/my.cnf.original
+		cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
+		if [ -z $MYSQLROOTPW ]; then
+			read -p 'Enter new mysql root password : ' MYSQLROOTPW
+		fi
+		/etc/init.d/mysqld start
+		mysqladmin -u root password $MYSQLROOTPW
 	fi
-	/etc/init.d/mysqld start
-	mysqladmin -u root password $MYSQLROOTPW
 else
 	echo "MySQL already installed"
 fi

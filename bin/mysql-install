@@ -49,19 +49,28 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		#remove old
 		yum remove mysql
 		
-		#install new
-		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-server-community-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
-		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-client-community-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
+		ARCH=`uname -m`
+		if [ $ARCH == "i686" ]; then
+			ARCH="i386"
+		elif [ $ARCH == "i586" ]; then
+			ARCH="i386"
+		elif [ $ARCH == "i486" ]; then
+			ARCH="i386"
+		fi
 		
-		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-shared-compat-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
-		wget http://dev.mysql.com/get/Downloads/MySQL-5.1/MySQL-client-community-5.1.30-0.rhel5.i386.rpm/from/http://mysql.rhnet.is/
+		#install new
+		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-server-community-5.1.36-0.rhel5.$ARCH.rpm
+		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm
+		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-shared-community-5.1.36-0.rhel5.$ARCH.rpm
+		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
 		
 		#wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.7.tar.gz/from/http://mysql.rhnet.is/
 		
-		rpm -i MySQL-server-community-5.1.30-0.rhel5.i386.rpm 
-	    rpm -i MySQL-shared-compat-5.1.30-0.rhel5.i386.rpm 
-	    rpm -i MySQL-client-community-5.1.30-0.rhel5.i386.rpm
-	
+		rpm -i MySQL-server-community-5.1.36-0.rhel5.$ARCH.rpm 
+	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm 
+	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm
+	    rpm -i MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
+	    
 		cp /etc/my.cnf /etc/my.cnf.original
 		cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
 	

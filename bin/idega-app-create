@@ -16,7 +16,8 @@ cat << EOF
 
   OPTIONS:
    -h               Show this message
-   -s [name]        Server Name
+   -s [name]        Server Name (such as myserver)
+   -l [aliases]     Server DNS Aliases Comma Separated (such as www.myserver.com,www2.myserver.com)
    -p [password]    MySQL Root password
    -b [folderpath]  Base Folder Path for idega/tomcats installation
    -n [nubmer]      Server number [1..99]
@@ -29,7 +30,7 @@ EOF
 
 VERBOSE=1
 LASTSERVERNUMBER=0
-while getopts “hs:p:b:n:a:g:” OPTION
+while getopts “hs:l:p:b:n:a:g:” OPTION
 do
      case $OPTION in
          h)
@@ -38,6 +39,9 @@ do
              ;;
          s)
              SERVERNAME=$OPTARG
+             ;;
+         l)
+             SERVERALIASES=$OPTARG
              ;;
 		 p)
              MYSQLROOTPW=$OPTARG
@@ -121,6 +125,9 @@ else
 fi
 
 if [ $VERBOSE -eq 0 ]; then
+	if [ -z $SERVERALIASES ]; then
+		read -p 'Server Aliases Comma Separated (such as www.myserver.com,www2.myserver.com): ' SERVERALIASES
+	fi
 	if [ -z $WEBAPPGROUP ]; then
 		WEBAPPGROUP="com.idega.webapp.product"
 	fi
@@ -130,9 +137,12 @@ if [ $VERBOSE -eq 0 ]; then
 	if [ -z $WEBAPPVERSION ]; then
 		WEBAPPVERSION="4.1.3-SNAPSHOT"
 	fi
-	DATABASENAME="${SERVERNAME}db"
+
+	DATABASENAME="${SERVERNAME}.db"
+	DATABASENAME=${DATABASENAME//\./-}
 	printf "Database name: $DATABASENAME\n"
-	DBUSER="${SERVERNAME}user"
+	DBUSER="${SERVERNAME}.user"
+	DBUSER=${DBUSER//\./-}
 	printf "Database username: $DBUSER\n"
 	DBPASSWORD=`random-string`
 	printf "Database password: $DBPASSWORD\n"
@@ -201,6 +211,8 @@ DEBUGPORT=$(($SERVERNUMBER+10000))
 #tomcat/conf/virtualhost.conf
 if [ -z $SERVERALIASES ]; then
 	SERVERALIASES=www.$SERVERNAME
+else
+	SERVERALIASES=${SERVERALIASES//\,/ }
 fi
 
 #tomcats/conf/virtualhosts.conf
@@ -266,6 +278,12 @@ mv $SERVERXMLTEMPFILEPATH $SERVERXMLFILEPATH
 replace 'redirectPort="8443"' 'redirectPort="8443" URIEncoding="UTF-8"' < $SERVERXMLFILEPATH > $SERVERXMLTEMPFILEPATH
 mv $SERVERXMLTEMPFILEPATH $SERVERXMLFILEPATH
 
+DATA_PATH=~/data
+SLIDE_DATA_PATH=$DATA_PATH/$SERVERNAME/slide
+if [ ! -e $SLIDE_DATA_PATH ];then
+	mkdir -p $SLIDE_DATA_PATH
+fi
+
 #Change ROOT.xml
 ROOTXMLTEMPLATE=$SCRIPTDIR/../templates/ROOT-template.xml
 mkdir -p $SERVERNAME/conf/Catalina/localhost
@@ -279,12 +297,18 @@ replace DBUSER $DBUSER < $ROOTXMLFILEPATH > $ROOTXMLTEMPFILEPATH
 mv $ROOTXMLTEMPFILEPATH $ROOTXMLFILEPATH
 replace DBPASSWORD $DBPASSWORD < $ROOTXMLFILEPATH > $ROOTXMLTEMPFILEPATH
 mv $ROOTXMLTEMPFILEPATH $ROOTXMLFILEPATH
+replace SLIDE_DATA_PATH $SLIDE_DATA_PATH < $ROOTXMLFILEPATH > $ROOTXMLTEMPFILEPATH
+mv $ROOTXMLTEMPFILEPATH $ROOTXMLFILEPATH
 
 #Change virtualhost.conf
 VIRTUALHOSTTEMPLATE=$SCRIPTDIR/../templates/virtualhost-template.conf
 VIRTUALHOSTFILEPATH=$SERVERNAME'/conf/virtualhost.conf'
 VIRTUALHOSTTEMPFILEPATH=$SERVERNAME'/conf/virtualhost.conf.tmp'
 cp $VIRTUALHOSTTEMPLATE $VIRTUALHOSTFILEPATH
+
+if [ ! -e $TOMCATSFOLDER/conf.d ]; then
+	mkdir $TOMCATSFOLDER/conf.d
+fi
 
 replace SERVERNAME $SERVERNAME < $VIRTUALHOSTFILEPATH > $VIRTUALHOSTTEMPFILEPATH
 mv $VIRTUALHOSTTEMPFILEPATH $VIRTUALHOSTFILEPATH
@@ -319,13 +343,13 @@ if [ ! -e $VIRTUALHOSTSCONFIGFILEPATH ]; then
 	mkdir $TOMCATSFOLDER/conf
 	touch $VIRTUALHOSTSCONFIGFILEPATH
 fi
-cat $VIRTUALHOSTFILEPATH >> $VIRTUALHOSTSCONFIGFILEPATH
-
-if [ ! -e $TOMCATSFOLDER/conf.d ]; then
-	mkdir $TOMCATSFOLDER/conf.d
-fi
 cp $VIRTUALHOSTFILEPATH $TOMCATSFOLDER/conf.d/$SERVERNAME.conf
+#cat $VIRTUALHOSTFILEPATH >> $VIRTUALHOSTSCONFIGFILEPATH
 
+VIRTUALHOSTSTEMPLATE=$SCRIPTDIR/../templates/virtualhosts-template.conf
+cp $VIRTUALHOSTSTEMPLATE $VIRTUALHOSTSCONFIGFILEPATH
+replace TOMCATSFOLDER $TOMCATSFOLDER < $VIRTUALHOSTSCONFIGFILEPATH > $VIRTUALHOSTSCONFIGTEMPFILEPATH
+mv $VIRTUALHOSTTEMPFILEPATH $VIRTUALHOSTFILEPATH
 
 #Install JDBC Driver
 cp $MYSQLDRIVERPATH $SERVERNAME/lib

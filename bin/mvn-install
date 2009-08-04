@@ -13,7 +13,7 @@ if [[ -z $MAVEN2_HOME ]]
 then
 	echo "Setting up Maven"
 	cd /usr/local
-	wget http://apache.jumper.nu/maven/binaries/apache-maven-2.2.0-bin.tar.gz
+	wget ftp://ftp.rhnet.is/pub/apache/maven/binaries/apache-maven-2.2.0-bin.tar.gz
 	tar zxf apache-maven-2.2.0-bin.tar.gz
 	ln -s apache-maven-2.2.0 maven2
 	echo -e "export MAVEN2_HOME=/usr/local/maven2\nexport PATH=\$PATH:\$MAVEN2_HOME/bin" > /etc/profile.d/maven2.sh

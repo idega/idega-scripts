@@ -7,7 +7,7 @@ printf '#############################################################\n'
 printf '\n'
 
 SCRIPTDIR=`dirname $0`
-INSTALL_MYSQL_CUSTOM="n"
+INSTALL_MYSQL_CUSTOM="y"
 usage()
 {
 cat << EOF
@@ -18,12 +18,12 @@ cat << EOF
 
  OPTIONS:
    -h                        Show this message
-   -c                        Install Custom (Community) version of MySQL 5.1
+   -s                        Install Standard Mysql from (yum) repository insted of the default (Community) version of MySQL 5.1
    -p [password]             Set MySQL Root password
 EOF
 }
 
-while getopts “hp:c” OPTION
+while getopts “hp:s” OPTION
 do
      case $OPTION in
          h)
@@ -33,8 +33,8 @@ do
          p)
              MYSQLROOTPW=$OPTARG
              ;;
-         c)
-             INSTALL_MYSQL_CUSTOM="y"
+         s)
+             INSTALL_MYSQL_CUSTOM="n"
              ;;
          ?)
              usage
@@ -60,32 +60,30 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		
 		#install new
 		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-server-community-5.1.36-0.rhel5.$ARCH.rpm
+		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
 		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm
 		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-shared-community-5.1.36-0.rhel5.$ARCH.rpm
-		wget http://mysql.rhnet.is/Downloads/MySQL-5.1/MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
 		
 		#wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.7.tar.gz/from/http://mysql.rhnet.is/
 		
-		rpm -i MySQL-server-community-5.1.36-0.rhel5.$ARCH.rpm 
-	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm 
-	    rpm -i MySQL-shared-community-5.1.36-0.rhel5.$ARCH.rpm
+		rpm -i MySQL-server-community-5.1.36-0.rhel5.$ARCH.rp
 	    rpm -i MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
+		#rpm -i MySQL-shared-community-5.1.36-0.rhel5.$ARCH.rpm
+	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm 
 	    
 		cp /etc/my.cnf /etc/my.cnf.original
 		cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
 	
-		service mysqld stop
-			
-		OLDPID=/var/run/mysqld/mysqld.pid
-		NEWPID=/var/lib/mysql/mysqld.pid
-		
-		replace $OLDPID $NEWPID < /etc/rc.d/init.d/mysqld > /etc/rc.d/init.d/mysqld.temp
-		mv /etc/rc.d/init.d/mysqld.temp /etc/rc.d/init.d/mysqld
-		chmod 755 /etc/rc.d/init.d/mysqld
-		touch /var/lib/mysql/mysqld.pid
-		chown mysql:mysql /var/lib/mysql/mysqld.pid
+		#service mysql stop	
+		#OLDPID=/var/run/mysqld/mysqld.pid
+		#NEWPID=/var/lib/mysql/mysqld.pid
+		#replace $OLDPID $NEWPID < /etc/rc.d/init.d/mysql > /etc/rc.d/init.d/mysql.temp
+		#mv /etc/rc.d/init.d/mysql.temp /etc/rc.d/init.d/mysql
+		#chmod 755 /etc/rc.d/init.d/mysqld
+		#touch /var/lib/mysql/mysqld.pid
+		#chown mysql:mysql /var/lib/mysql/mysqld.pid
 	
-		service mysqld start
+		service mysql start
 		
 		if [ -z $MYSQLROOTPW ]; then
 			read -p 'Enter new mysql root password : ' MYSQLROOTPW

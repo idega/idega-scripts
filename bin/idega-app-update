@@ -54,7 +54,11 @@ done
 
 
 if [ -z $TOMCATDIR ]; then
-	TOMCATDIR=`pwd`
+	if [ -e idega.properties ]; then
+		TOMCATDIR=`pwd`
+	elif [ -z $SERVERNAME ]; then
+		read -p "Enter idega app to upgrade (within the tomcats folder): " SERVERNAME
+	fi
 fi
 
 if [ -z $PROTOCOL ]; then
@@ -71,6 +75,8 @@ if [ ! -z $SERVERNAME ]; then
 fi
 
 
+
+
 if [ -e idega.properties ]; then
 	WEBAPPNAME=`sed '/^\#/d' idega.properties | grep 'artifactId'  | tail -n 1 | sed 's/^.*=//'`
 	WEBAPPGROUP=`sed '/^\#/d' idega.properties | grep 'groupId'  | tail -n 1 | sed 's/^.*=//'`
@@ -80,7 +86,8 @@ if [ -e idega.properties ]; then
 		read -p "Enter webapp version (example 4.1.3-SNAPSHOT) to upgrade to: " VERSION
 	fi
 else
-	printf "Error: Not an idega tomcat app directory"
+	printf "Error: [$TOMCATDIR] Not an idega tomcat app directory\n"
+	exit 0
 fi
 
 if [ ! -e $TOMCATDIR/wars ]; then

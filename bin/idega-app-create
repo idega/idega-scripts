@@ -20,7 +20,7 @@ cat << EOF
    -p [password]    MySQL Root password
    -b [folderpath]  Base Folder Path for idega/tomcats installation
    -n [nubmer]      Server number [1..99]
-   -a [artifactId]  App name (maven artifactId - default lucid)
+   -a [artifactId]  App name (maven artifactId - default idega-webapp-base)
    -g [groupId]     App Group (maven artifactId - default com.idega.webapp.product)
 
 EOF
@@ -84,6 +84,12 @@ else
 	printf "Creating app with name: $SERVERNAME.\n"
 fi
 
+if [ -e $TOMCATSFOLDER/$SERVERNAME ]; then
+	printf "Error: App $SERVERNAME already exists. Please delete it before re-creating it\n"
+	exit 0
+fi
+
+
 SERVERSPROPERTIESFILE=$TOMCATSFOLDER/servers.properties
 #If not in verbose mode:
 if [ $VERBOSE -eq 0 ]; then
@@ -119,7 +125,7 @@ if [ $VERBOSE -eq 0 ]; then
 		WEBAPPGROUP="com.idega.webapp.product"
 	fi
 	if [ -z $WEBAPPNAME ]; then
-		WEBAPPNAME="lucid"
+		WEBAPPNAME="idega-webapp-base"
 	fi
 	if [ -z $WEBAPPVERSION ]; then
 		WEBAPPVERSION="4.1.3-SNAPSHOT"
@@ -152,13 +158,13 @@ fi
 
 #Set the webapp to use
 if [ -z $WEBAPPGROUP ]; then
-	read -p 'Enter webapp group to use (example com.idega.block.custom) to use: ' WEBAPPGROUP
+	read -p 'Enter webapp group (example com.idega.webapp.product) to use: ' WEBAPPGROUP
 fi
 if [ -z $WEBAPPNAME ]; then
-	read -p 'Enter webapp name to use (example lucid) to use: ' WEBAPPNAME
+	read -p 'Enter webapp name (example idega-webapp-base) to use: ' WEBAPPNAME
 fi
 if [ -z $WEBAPPVERSION ]; then
-	read -p 'Enter webapp version to use (example 4.1.3-SNAPSHOT) to use: ' WEBAPPVERSION
+	read -p 'Enter webapp version (example 4.1.3-SNAPSHOT) to use: ' WEBAPPVERSION
 fi
 
 MYSQLDRIVERARCHIVEPATH=$TOMCATSFOLDER/mysql-connector-java-5.1.8.tar.gz
@@ -173,11 +179,17 @@ TOMCATDOWNLOADURL="http://apache.dataphone.se/tomcat/tomcat-6/v$TOMCATVERSION/bi
 if [ ! -e $TOMCATSFOLDER ]; then
 	mkdir -p $TOMCATSFOLDER
 fi
+LOGSFOLDER=$TOMCATSFOLDER/logs
+if [ ! -e $LOGSFOLDER ]; then
+	mkdir -p $LOGSFOLDER
+fi
+
 
 #tomcat/conf/server.xml
 SHUTDOWNPORT=$(($AJPPORT-300))
 HTTPPORT=$(($AJPPORT-200))
 JMXPORT=$(($AJPPORT-100))
+DEBUGPORT=$(($SERVERNUMBER+10000))
 
 #tomcat/conf/Catalina/localhost/Root.xml
 #TODO make a random username and password
@@ -251,6 +263,8 @@ replace port=\"8005\" port=\"$SHUTDOWNPORT\" < $SERVERXMLFILEPATH > $SERVERXMLTE
 mv $SERVERXMLTEMPFILEPATH $SERVERXMLFILEPATH
 replace port=\"8080\" port=\"$HTTPPORT\" < $SERVERXMLFILEPATH > $SERVERXMLTEMPFILEPATH
 mv $SERVERXMLTEMPFILEPATH $SERVERXMLFILEPATH
+replace 'redirectPort="8443"' 'redirectPort="8443" URIEncoding="UTF-8"' < $SERVERXMLFILEPATH > $SERVERXMLTEMPFILEPATH
+mv $SERVERXMLTEMPFILEPATH $SERVERXMLFILEPATH
 
 #Change ROOT.xml
 ROOTXMLTEMPLATE=$SCRIPTDIR/../templates/ROOT-template.xml
@@ -281,6 +295,24 @@ mv $VIRTUALHOSTTEMPFILEPATH $VIRTUALHOSTFILEPATH
 replace TOMCATSFOLDER $TOMCATSFOLDER < $VIRTUALHOSTFILEPATH > $VIRTUALHOSTTEMPFILEPATH
 mv $VIRTUALHOSTTEMPFILEPATH $VIRTUALHOSTFILEPATH
 
+STARTUPSCRIPTPATH=$SERVERNAME'/bin/startup.sh'
+STARTUPSCRIPTTEMPPATH=$SERVERNAME'/bin/startup.sh.tmp'
+awk '{ if ( $0 ~ /#!\/bin\/sh/ ) {
+	  printf( "%s\n%s\n", $0, "#IDEGAWEB-CONFIG-START" );
+	  printf( "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:/usr/X11/lib\"\n" );
+	  printf( "#uncomment for remote debugging\n" );
+	  printf( "#export CATALINA_OPTS=\"-Xmx256M -XX:MaxPermSize=96M -Dfile.encoding=UTF-8 -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=$DEBUGPORT -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40\"\n" );
+	  printf( "#production defaults\n" );
+	  printf( "export CATALINA_OPTS=\"-Xmx256M -XX:MaxPermSize=96M -Dfile.encoding=UTF-8 -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 \"\n" );
+	  printf( "#IDEGAWEB-CONFIG-END\n" );
+     } else {
+          print $0;
+     }
+}' $STARTUPSCRIPTPATH > $STARTUPSCRIPTTEMPPATH
+mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
+sed s/\$DEBUGPORT/$DEBUGPORT/ $STARTUPSCRIPTPATH > $STARTUPSCRIPTTEMPPATH
+mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
+chmod 755 $STARTUPSCRIPTPATH
 
 #Append this servers virtualhost.conf to the virtualhosts.conf for apache
 if [ ! -e $VIRTUALHOSTSCONFIGFILEPATH ]; then
@@ -326,7 +358,7 @@ else
 fi
 		
 #cd $SERVERNAME
-idega-app-update $WEBAPPVERSION -p ssh
+idega-app-update -v $WEBAPPVERSION
 
 #Reload config files without severing connections to running processes
 #TODO MAKE SUDOERS WORK

@@ -10,7 +10,7 @@ usage()
 {
 cat << EOF
 
-   Usage: $0 VERSION [options]
+   Usage: $0 [options]
 
    A script to install all software required for idega
 
@@ -20,7 +20,7 @@ cat << EOF
 EOF
 }
 
-while getopts “hs” OPTION
+while getopts “hp:” OPTION
 do
      case $OPTION in
          h)

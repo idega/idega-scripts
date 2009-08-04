@@ -34,7 +34,8 @@ do
              MYSQLROOTPW=$OPTARG
              ;;
          c)
-         	INSTALL_MYSQL_CUSTOM="y"
+             INSTALL_MYSQL_CUSTOM="y"
+             ;;
          ?)
              usage
              exit

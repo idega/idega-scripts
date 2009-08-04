@@ -139,10 +139,10 @@ if [ $VERBOSE -eq 0 ]; then
 	fi
 
 	DATABASENAME="${SERVERNAME}.db"
-	DATABASENAME=${DATABASENAME//\./-}
+	DATABASENAME=${DATABASENAME//\./_}
 	printf "Database name: $DATABASENAME\n"
 	DBUSER="${SERVERNAME}.user"
-	DBUSER=${DBUSER//\./-}
+	DBUSER=${DBUSER//\./_}
 	printf "Database username: $DBUSER\n"
 	DBPASSWORD=`random-string`
 	printf "Database password: $DBPASSWORD\n"

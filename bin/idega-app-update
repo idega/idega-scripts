@@ -9,30 +9,33 @@ cat << EOF
   # By Tryggvi Larusson (tryggvi@idega.com) 2009                      #
   #####################################################################
 
-   Usage: $0 VERSION [options]
+   Usage: $0 [options]
 
    A script to update an existing idega app.
 
  OPTIONS:
    -h                               Show this message
+   -v [version]                     Version of the webapp to upgrade with 
    -b [base idega tomcats path]     Path to the applications tomcat dir
-   -s [app/servername]              Path to the applications tomcat dir 
+   -s [app/servername]              Name of the idega app within the applications tomcat dir 
    -p [ssh/maven]                   Protocol to fetch war [ssh/maven] default is maven
 EOF
 }
 
-VERSION=$1
-
+SCRIPTDIR=`dirname $0`
 
 USE_SSH=0
 VERBOSE=
-while getopts “hp:s:b:” OPTION
+while getopts “hv:p:s:b:” OPTION
 do
      case $OPTION in
          h)
              usage
              exit 1
              ;;
+         v)
+             VERSION=$OPTARG
+             ;;         
          p)
              PROTOCOL=$OPTARG
              ;;
@@ -49,6 +52,11 @@ do
      esac
 done
 
+
+if [ -z $TOMCATDIR ]; then
+	TOMCATDIR=`pwd`
+fi
+
 if [ -z $PROTOCOL ]; then
 	PROTOCOL="maven"
 fi
@@ -59,11 +67,9 @@ fi
 
 if [ ! -z $SERVERNAME ]; then
 	TOMCATDIR=$TOMCATSFOLDER/$SERVERNAME
+	cd $TOMCATDIR
 fi
 
-if [ -z $TOMCATDIR ]; then
-	TOMCATDIR=`pwd`
-fi
 
 if [ -e idega.properties ]; then
 	WEBAPPNAME=`sed '/^\#/d' idega.properties | grep 'artifactId'  | tail -n 1 | sed 's/^.*=//'`
@@ -71,12 +77,10 @@ if [ -e idega.properties ]; then
 	if [[ -z $VERSION ]]; then
 		printf "Updating app in directory $TOMCATDIR\n"
 		printf "This app has installed the app '$WEBAPPNAME'\n"
-		read -p "What new version do you want to update with : " VERSION
+		read -p "Enter webapp version (example 4.1.3-SNAPSHOT) to upgrade to: " VERSION
 	fi
-	#WEBAPPGROUP="com.idega.webapp.custom"
 else
-	echo "You have to be inside a tomcat folder with idega.properties or pass the appname as -s parameter"
-	exit 0
+	printf "Error: Not an idega tomcat app directory"
 fi
 
 if [ ! -e $TOMCATDIR/wars ]; then
@@ -88,6 +92,11 @@ cd $TOMCATDIR/../
 WARFILENAME=$WEBAPPNAME-$VERSION.war
 if [ ! -e $WARFILENAME ]; then
 	if [ $PROTOCOL == "maven" ]; then
+		if [ ! -e ~/.m2/settings.xml ]; then
+			#Copy default settings.xml
+			mkdir -p ~/.m2
+			cp $SCRIPTDIR/../templates/settings.xml ~/.m2/settings.xml
+		fi
 		echo "Using Maven to fetch $WARFILENAME\n"
 		mvn-fetch-artifact -g $WEBAPPGROUP -a $WEBAPPNAME -v $VERSION -t war
 	elif [ $PROTOCOL == "ssh" ]; then

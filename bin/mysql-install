@@ -68,7 +68,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		
 		rpm -i MySQL-server-community-5.1.36-0.rhel5.$ARCH.rpm 
 	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm 
-	    rpm -i MySQL-client-community-5.1.36-0.rhel5.$ARCH.rpm
+	    rpm -i MySQL-shared-community-5.1.36-0.rhel5.$ARCH.rpm
 	    rpm -i MySQL-shared-compat-5.1.36-0.rhel5.$ARCH.rpm
 	    
 		cp /etc/my.cnf /etc/my.cnf.original
@@ -90,7 +90,8 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		if [ -z $MYSQLROOTPW ]; then
 			read -p 'Enter new mysql root password : ' MYSQLROOTPW
 		fi
-		mysqladmin -u root password $MYSQLROOT
+		/usr/bin/mysqladmin -u root password $MYSQLROOTPW
+		/usr/bin/mysqladmin -u root -h localhost password $MYSQLROOTPW
 	else
 		yum -y remove mysql mysql-server
 		echo "Setting up MySQL"

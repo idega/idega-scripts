@@ -1,0 +1,30 @@
+#!/usr/bin/ruby -w
+require 'ftools'
+require 'optparse'
+
+def printHelp(options)
+	puts options
+	exit 0 
+end
+
+setup = {:outputDirectory=>"."}
+opt = nil
+
+ARGV.options {
+  |opt|
+
+  opt.banner = "Usage:\n\idega-app-data-import [options]"
+
+  opt.on("Options:\n")
+  opt.on("-s [appname]", "--serverName", String, "Server Name [REQUIRED]") { |setup['serverName']|}
+  opt.on("-f [datafilepath]", "--filePath", String, "Export data file path [REQUIRED]") { |setup['filePath']|}
+
+  opt.on("-h", "--help", "This text") { printHelp(opt) }
+
+  opt.parse!
+
+}
+
+serverName = setup['serverName']
+filePath = setup['filePath']
+

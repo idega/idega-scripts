@@ -10,7 +10,11 @@ printf '\n'
 if [[ -z $JAVA_HOME ]]
 then
 	echo "Setting up Java"
+	
+	# wget "http://cds-esd.sun.com/ESD7/JSCDL/jdk/6u14-b08/jdk-6u14-linux-x64-rpm.bin?AuthParam=1249408053_0792b2ede8e7bd8fe6869198bcdd5966&TicketId=B%2Fw5lRiHRVpLThJEO1Fckgbq&GroupName=CDS&FilePath=/ESD7/JSCDL/jdk/6u14-b08/jdk-6u14-linux-x64-rpm.bin&File=jdk-6u14-linux-x64-rpm.bin" -O jdk-6u14-linux-x64-rpm.bin
+	
 	yum -y install java-sdk
+	yum -y install ghostscript-fonts xorg-x11-fonts-base xorg-x11-fonts-Type1 xorg-x11-fonts-75dpi bitmap-fonts urw-fonts xorg-x11-fonts-ISO8859-1-75dpi xorg-x11-fonts-100dpi xorg-x11-fonts-truetype xorg-x11-fonts-ISO8859-15-75dpi dejavu-lgc-fonts bitstream-vera-fonts xorg-x11-fonts-ISO8859-15-100dpi xorg-x11-fonts-ISO8859-1-100dpi liberation-fonts
 	echo -e "export JAVA_HOME=/usr/lib/jvm/java-1.6.0\nexport PATH=$PATH:$JAVA_HOME/bin" > /etc/profile.d/_java.sh
 	chmod 755 /etc/profile.d/_java.sh
 else

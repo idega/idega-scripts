@@ -1,0 +1,127 @@
+#!/bin/sh
+
+usage()
+{
+cat << EOF
+
+  #####################################################################
+  # A script to update an existing idega app                          #
+  # By Tryggvi Larusson (tryggvi@idega.com) 2009                      #
+  #####################################################################
+
+   Usage: $0 [options]
+
+   A script to update an existing idega app.
+
+ OPTIONS:
+   -h                               Show this message
+   -v [version]                     Version of the webapp to upgrade with 
+   -b [base idega tomcats path]     Path to the applications tomcat dir
+   -s [app/servername]              Name of the idega app within the applications tomcat dir 
+   -p [ssh/maven]                   Protocol to fetch war [ssh/maven] default is maven
+EOF
+}
+
+SCRIPTDIR=`dirname $0`
+
+USE_SSH=0
+VERBOSE=
+while getopts “hv:p:s:b:” OPTION
+do
+     case $OPTION in
+         h)
+             usage
+             exit 1
+             ;;
+         v)
+             VERSION=$OPTARG
+             ;;         
+         p)
+             PROTOCOL=$OPTARG
+             ;;
+         s)
+             SERVERNAME=$OPTARG
+             ;;
+		 b)
+             TOMCATSFOLDER=$OPTARG
+             ;;
+         ?)
+             usage
+             exit
+             ;;
+     esac
+done
+
+
+if [ -z $TOMCATDIR ]; then
+	if [ -e idega.properties ]; then
+		TOMCATDIR=`pwd`
+	elif [ -z $SERVERNAME ]; then
+		read -p "Enter idega app to upgrade (within the tomcats folder): " SERVERNAME
+	fi
+fi
+
+if [ -z $PROTOCOL ]; then
+	PROTOCOL="maven"
+fi
+
+if [ -z $TOMCATSFOLDER ]; then
+	TOMCATSFOLDER=~/tomcat
+fi
+
+if [ ! -z $SERVERNAME ]; then
+	TOMCATDIR=$TOMCATSFOLDER/$SERVERNAME
+	cd $TOMCATDIR
+fi
+
+
+
+
+if [ -e idega.properties ]; then
+	WEBAPPNAME=`sed '/^\#/d' idega.properties | grep 'artifactId'  | tail -n 1 | sed 's/^.*=//'`
+	WEBAPPGROUP=`sed '/^\#/d' idega.properties | grep 'groupId'  | tail -n 1 | sed 's/^.*=//'`
+	if [[ -z $VERSION ]]; then
+		printf "Updating app in directory $TOMCATDIR\n"
+		printf "This app has installed the app '$WEBAPPNAME'\n"
+		read -p "Enter webapp version (example 4.1.3-SNAPSHOT) to upgrade to: " VERSION
+	fi
+else
+	printf "Error: [$TOMCATDIR] Not an idega tomcat app directory\n"
+	exit 0
+fi
+
+if [ ! -e $TOMCATDIR/wars ]; then
+	mkdir cd $TOMCATDIR/wars
+fi
+
+cd $TOMCATDIR/../
+
+WARFILENAME=$WEBAPPNAME-$VERSION.war
+if [ ! -e $WARFILENAME ]; then
+	if [ $PROTOCOL == "maven" ]; then
+		if [ ! -e ~/.m2/settings.xml ]; then
+			#Copy default settings.xml
+			mkdir -p ~/.m2
+			cp $SCRIPTDIR/../templates/settings.xml ~/.m2/settings.xml
+		fi
+		echo "Using Maven to fetch $WARFILENAME\n"
+		mvn-fetch-artifact -g $WEBAPPGROUP -a $WEBAPPNAME -v $VERSION -t war
+	elif [ $PROTOCOL == "ssh" ]; then
+		echo "Using SSH to fetch $WARFILENAME\n"
+		scp idegaweb@build.idega.is:/home/idegaweb/platform4/$WEBAPPGROUP/$WEBAPPNAME/target/$WEBAPPNAME-$VERSION.war .	
+	fi
+fi
+cp $WARFILENAME $TOMCATDIR/wars/ROOTNEW.war
+
+cd $TOMCATDIR/bin/
+./shutdown.sh
+
+cd $TOMCATDIR/wars/
+cp ROOT.war ROOT.war.oldbak
+mv ROOTNEW.war ROOT.war
+rm -Rf $TOMCATDIR/webapps/ROOT
+rm -f $TOMCATDIR/webapps/ROOT.war
+cp ROOT.war $TOMCATDIR/webapps/
+cd $TOMCATDIR/bin/
+./startup.sh
+echo "Updated webapp $WEBAPPNAME war to version : $VERSION"

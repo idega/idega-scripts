@@ -62,7 +62,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 	    rpm -i MySQL-client-community-5.1.30-0.rhel5.i386.rpm
 	
 		cp /etc/my.cnf /etc/my.cnf.original
-		cp mysql-my.cnf /etc/my.cnf
+		cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
 	
 		service mysqld stop
 			

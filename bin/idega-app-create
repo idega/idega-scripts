@@ -76,6 +76,8 @@ fi
 if [ -z $TOMCATSFOLDER ]; then
 	TOMCATSFOLDER=~/tomcat
 fi
+
+
 VIRTUALHOSTSCONFIGFILEPATH=$TOMCATSFOLDER/conf/virtualhosts.conf
 SCRIPTDIR=`dirname $0`
 echo "Script Directory Path: $SCRIPTDIR"
@@ -84,14 +86,21 @@ if [ -z $SERVERNAME ]
 then
 	read -p 'Enter the servers domain name (without www.) : ' SERVERNAME
 	#SERVERNAME=$1
+	if [ -z $SERVERALIASES ]; then
+		read -p 'Server Aliases Comma Separated (such as www.myserver.com,www2.myserver.com): ' SERVERALIASES
+	fi
 else
 	printf "Creating app with name: $SERVERNAME.\n"
 fi
 
-if [ -e $TOMCATSFOLDER/$SERVERNAME ]; then
+APPFOLDER=$TOMCATSFOLDER/$SERVERNAME
+
+if [ -e $APPFOLDER ]; then
 	printf "Error: App $SERVERNAME already exists. Please delete it before re-creating it\n"
 	exit 0
 fi
+
+
 
 
 SERVERSPROPERTIESFILE=$TOMCATSFOLDER/servers.properties
@@ -126,7 +135,7 @@ fi
 
 if [ $VERBOSE -eq 0 ]; then
 	if [ -z $SERVERALIASES ]; then
-		read -p 'Server Aliases Comma Separated (such as www.myserver.com,www2.myserver.com): ' SERVERALIASES
+		SERVERALIASES=www.$SERVERNAME
 	fi
 	if [ -z $WEBAPPGROUP ]; then
 		WEBAPPGROUP="com.idega.webapp.product"
@@ -210,8 +219,6 @@ DEBUGPORT=$(($SERVERNUMBER+10000))
 
 #tomcat/conf/virtualhost.conf
 if [ -z $SERVERALIASES ]; then
-	SERVERALIASES=www.$SERVERNAME
-else
 	SERVERALIASES=${SERVERALIASES//\,/ }
 fi
 
@@ -319,15 +326,23 @@ mv $VIRTUALHOSTTEMPFILEPATH $VIRTUALHOSTFILEPATH
 replace TOMCATSFOLDER $TOMCATSFOLDER < $VIRTUALHOSTFILEPATH > $VIRTUALHOSTTEMPFILEPATH
 mv $VIRTUALHOSTTEMPFILEPATH $VIRTUALHOSTFILEPATH
 
+MAXMEMSIZE="256M"
+MAXPERMSIZE="128M"
+
 STARTUPSCRIPTPATH=$SERVERNAME'/bin/startup.sh'
 STARTUPSCRIPTTEMPPATH=$SERVERNAME'/bin/startup.sh.tmp'
+
+SHUTDOWNSCRIPTPATH=$SERVERNAME'/bin/shutdown.sh'
+SHUTDOWNSCRIPTTEMPPATH=$SERVERNAME'/bin/shutdown.sh.tmp'
+
 awk '{ if ( $0 ~ /#!\/bin\/sh/ ) {
 	  printf( "%s\n%s\n", $0, "#IDEGAWEB-CONFIG-START" );
 	  printf( "export LD_LIBRARY_PATH=\"\$LD_LIBRARY_PATH:/usr/X11/lib\"\n" );
 	  printf( "#uncomment for remote debugging\n" );
-	  printf( "#export CATALINA_OPTS=\"-Xmx256M -XX:MaxPermSize=96M -Dfile.encoding=UTF-8 -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=$DEBUGPORT -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40\"\n" );
+	  printf( "#export CATALINA_OPTS=\"-Xmx$MAXMEMSIZE -XX:MaxPermSize=$MAXPERMSIZE -Dfile.encoding=UTF-8 -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError -Xdebug -Xnoagent -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=$DEBUGPORT -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40\"\n" );
 	  printf( "#production defaults\n" );
-	  printf( "export CATALINA_OPTS=\"-Xmx256M -XX:MaxPermSize=96M -Dfile.encoding=UTF-8 -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 \"\n" );
+	  printf( "export CATALINA_OPTS=\"-Xmx$MAXMEMSIZE -XX:MaxPermSize=$MAXPERMSIZE -Dfile.encoding=UTF-8 -Djava.awt.headless=true -XX:+HeapDumpOnOutOfMemoryError -XX:MinHeapFreeRatio=20 -XX:MaxHeapFreeRatio=40 \"\n" );
+	  printf( "export CATALINA_PID=\"$APPFOLDER/tomcat.pid\"\n" );
 	  printf( "#IDEGAWEB-CONFIG-END\n" );
      } else {
           print $0;
@@ -336,7 +351,27 @@ awk '{ if ( $0 ~ /#!\/bin\/sh/ ) {
 mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
 sed s/\$DEBUGPORT/$DEBUGPORT/ $STARTUPSCRIPTPATH > $STARTUPSCRIPTTEMPPATH
 mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
+APPFOLDERESCAPED=${APPFOLDER//\//\\\/}
+#echo "APPFOLDERESCAPED: $APPFOLDERESCAPED"
+sed s/\$APPFOLDER/$APPFOLDERESCAPED/ $STARTUPSCRIPTPATH > $STARTUPSCRIPTTEMPPATH
+mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
+sed s/\$MAXMEMSIZE/$MAXMEMSIZE/ $STARTUPSCRIPTPATH > $STARTUPSCRIPTTEMPPATH
+mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
+sed s/\$MAXPERMSIZE/$MAXPERMSIZE/ $STARTUPSCRIPTPATH > $STARTUPSCRIPTTEMPPATH
+mv $STARTUPSCRIPTTEMPPATH $STARTUPSCRIPTPATH
 chmod 755 $STARTUPSCRIPTPATH
+awk '{ if ( $0 ~ /#!\/bin\/sh/ ) {
+	  printf( "%s\n%s\n", $0, "#IDEGAWEB-CONFIG-START" );
+	  printf( "export CATALINA_PID=\"$APPFOLDER/tomcat.pid\"\n" );
+	  printf( "#IDEGAWEB-CONFIG-END\n" );
+     } else {
+          print $0;
+     }
+}' $SHUTDOWNSCRIPTPATH > $SHUTDOWNSCRIPTTEMPPATH
+mv $SHUTDOWNSCRIPTTEMPPATH $SHUTDOWNSCRIPTPATH
+sed s/\$MAXPERMSIZE/$MAXPERMSIZE/ $SHUTDOWNSCRIPTPATH > $SHUTDOWNSCRIPTTEMPPATH
+mv $SHUTDOWNSCRIPTTEMPPATH $SHUTDOWNSCRIPTPATH
+chmod 755 $SHUTDOWNSCRIPTPATH
 
 #Append this servers virtualhost.conf to the virtualhosts.conf for apache
 if [ ! -e $VIRTUALHOSTSCONFIGFILEPATH ]; then

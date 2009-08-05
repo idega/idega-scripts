@@ -6,10 +6,19 @@ printf '# By Eirikur Hrafnsson (eiki@idega.com) 2009		  		  #\n'
 printf '###############################################################\n'
 printf '\n'
 
-read -p 'Enter database name to import into (it must exist): ' DBNAME
-read -p 'Enter path to dump file : ' DUMPFILE
-read -p 'Convert to UTF8 from LATIN1? (y/n) : ' USEUTF8
+DBNAME=$1
+DUMPFILE=$2
+USEUTF8=$3
 
+if [ -z $DBNAME ]; then
+	read -p 'Enter database name to import into (it must exist): ' DBNAME
+fi
+if [ -z $DUMPFILE ]; then
+	read -p 'Enter path to dump file : ' DUMPFILE
+fi
+if [ -z $USEUTF8 ]; then
+	read -p 'Convert to UTF8 from LATIN1? (y/n) : ' USEUTF8
+fi
 
 DBNAMEUTF8=$DBNAME'.utf8'
 

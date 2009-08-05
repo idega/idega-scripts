@@ -13,11 +13,12 @@ opt = nil
 ARGV.options {
   |opt|
 
-  opt.banner = "Usage:\n\idega-app-data-import [options]"
+  opt.banner = "Usage:\n\idega-app-data-export [options]"
 
   opt.on("Options:\n")
   opt.on("-s [appname]", "--serverName", String, "Server Name [REQUIRED]") { |setup['serverName']|}
   opt.on("-f [datafilepath]", "--filePath", String, "Export data file path [REQUIRED]") { |setup['filePath']|}
+  opt.on("-d [databasename]", "--database", String, "MySQL Database name") { |setup['database']|}
 
   opt.on("-h", "--help", "This text") { printHelp(opt) }
 
@@ -25,6 +26,50 @@ ARGV.options {
 
 }
 
+
 serverName = setup['serverName']
 filePath = setup['filePath']
+database = setup['database']
+
+if(filePath.nil?)
+	fileName = "#{serverName}-data.tgz"
+	basedir=Dir.pwd
+	filePath = "#{basedir}/#{fileName}"
+else
+	slashindex = filePath.rindex("/")
+	fileName=filePath[slashindex+1,filePath.length]
+	basedir = fileName=filePath[0,slashindex]
+end
+
+
+serverPath = "~/tomcat/#{serverName}"
+
+folderName = fileName[0,fileName.length-4]
+folderPath = "#{basedir}/#{folderName}"
+if(!File.exists?(folderPath))
+	Dir.mkdir(folderPath)
+end
+
+slidepath = "#{folderPath}/slide"
+if(!File.exists?(slidepath))
+	Dir.mkdir(slidepath)
+end
+
+mysqlpath = "#{folderPath}/mysql"
+if(!File.exists?(mysqlpath))
+	Dir.mkdir(mysqlpath)
+end
+
+Dir.chdir("#{mysqlpath}")
+system("mysql-backup-db #{database} db")
+
+serverslidedir = " #{serverPath}/bin"
+
+Dir.chdir("#{slidepath}")
+system("cp -r #{serverslidedir}/store .")
+system("cp -r #{serverslidedir}/work .")
+
+Dir.chdir("#{basedir}")
+system("tar cfvz #{filePath} #{folderName}")
+
 

@@ -13,11 +13,12 @@ opt = nil
 ARGV.options {
   |opt|
 
-  opt.banner = "Usage:\n\idega-app-data-import [options]"
+  opt.banner = "Usage:\n\idega-app-data-export [options]"
 
   opt.on("Options:\n")
   opt.on("-s [appname]", "--serverName", String, "Server Name [REQUIRED]") { |setup['serverName']|}
   opt.on("-f [datafilepath]", "--filePath", String, "Export data file path [REQUIRED]") { |setup['filePath']|}
+  opt.on("-d [databasename]", "--database", String, "MySQL Database name") { |setup['database']|}
 
   opt.on("-h", "--help", "This text") { printHelp(opt) }
 
@@ -25,6 +26,46 @@ ARGV.options {
 
 }
 
+
 serverName = setup['serverName']
 filePath = setup['filePath']
+database = setup['database']
+
+if(filePath.nil?)
+	fileName = "#{serverName}-data.tgz"
+	basedir=Dir.pwd
+	filePath = "#{basedir}/#{fileName}"
+else
+	slashindex = filePath.rindex("/")
+	fileName=filePath[slashindex+1,filePath.length]
+	basedir = fileName=filePath[0,slashindex]
+	Dir.chdir("#{basedir}")
+end
+
+system("tar xfvz #{filePath}")
+
+serverPath = "~/tomcat/#{serverName}"
+
+folderName = fileName[0,fileName.length-4]
+folderPath = "#{basedir}/#{folderName}"
+if(!File.exists?(folderPath))
+	Dir.mkdir(folderPath)
+end
+
+slidepath = "#{folderPath}/slide"
+mysqlpath = "#{folderPath}/mysql"
+
+Dir.chdir("#{mysqlpath}")
+system("mysql-restore-from-dump #{database} db.sql.gz y")
+
+serverslidedir = " #{serverPath}/bin"
+
+Dir.chdir("#{slidepath}")
+system("mv -f #{serverslidedir}/store #{serverslidedir}/store.old")
+system("mv -f #{serverslidedir}/store #{serverslidedir}/work.old")
+system("cp -r store #{serverslidedir}")
+system("cp -r work #{serverslidedir}")
+
+Dir.chdir("#{basedir}")
+
 

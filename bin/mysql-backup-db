@@ -6,10 +6,19 @@ printf '# By Eirikur Hrafnsson (eiki@idega.com) 2009		    	 #\n'
 printf '##############################################################\n'
 printf '\n'
 
+#MYSQLROOTPW
 DB=$1
-BACKUP_FOLDER=/home/idegaweb/backup/databases
+if [ ! -z $2 ]; then
+	BACKUP_FILE=$2
+else
+	BACKUP_FOLDER=/home/idegaweb/backup/databases
+	BACKUP_FILE=$BACKUP_FOLDER/$DB-UTF8-`date +%a`
+fi
 #BACKUP_FOLDER=.
-mysqldump -u root -h localhost --password=PUTYOURPASSWORDHERE --character-sets-dir=/usr/share/mysql/charsets --default-character-set=utf8 --skip-extended-insert $DB | gzip -9 > $BACKUP_FOLDER/$DB-UTF8-`date +%a`.sql.gz
+if [ -z $MYSQLROOTPW ];then
+	read -p 'Enter MySQL Root password: ' MYSQLROOTPW
+fi
+mysqldump -u root -h localhost --password=$MYSQLROOTPW --character-sets-dir=/usr/share/mysql/charsets --default-character-set=utf8 --skip-extended-insert $DB | gzip -9 > $BACKUP_FILE.sql.gz
 
 
 

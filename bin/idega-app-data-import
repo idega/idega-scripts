@@ -2,6 +2,24 @@
 require 'ftools'
 require 'optparse'
 
+def load_properties(properties_filename)
+    properties = {}
+    File.open(properties_filename, 'r') do |properties_file|
+      properties_file.read.each_line do |line|
+        line.strip!
+        if (line[0] != ?# and line[0] != ?=)
+          i = line.index('=')
+          if (i)
+            properties[line[0..i - 1].strip] = line[i + 1..-1].strip
+          else
+            properties[line] = ''
+          end
+        end
+      end      
+    end
+    properties
+  end
+
 def printHelp(options)
 	puts options
 	exit 0 
@@ -16,8 +34,8 @@ ARGV.options {
   opt.banner = "Usage:\n\idega-app-data-export [options]"
 
   opt.on("Options:\n")
-  opt.on("-s [appname]", "--serverName", String, "Server Name [REQUIRED]") { |setup['serverName']|}
-  opt.on("-f [datafilepath]", "--filePath", String, "Export data file path [REQUIRED]") { |setup['filePath']|}
+  opt.on("-s [appname]", "--serverName", String, "Server Name (e.g. myapp.mydomain.com) [REQUIRED]") { |setup['serverName']|}
+  opt.on("-f [datafilepath]", "--filePath", String, "Export data file path (e.g. myapp-export-data.tgz)") { |setup['filePath']|}
   opt.on("-d [databasename]", "--database", String, "MySQL Database name") { |setup['database']|}
 
   opt.on("-h", "--help", "This text") { printHelp(opt) }

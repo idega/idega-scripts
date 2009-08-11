@@ -16,8 +16,8 @@ ARGV.options {
   opt.banner = "Usage:\n\idega-app-data-export [options]"
 
   opt.on("Options:\n")
-  opt.on("-s [appname]", "--serverName", String, "Server Name [REQUIRED]") { |setup['serverName']|}
-  opt.on("-f [datafilepath]", "--filePath", String, "Export data file path [REQUIRED]") { |setup['filePath']|}
+  opt.on("-s [appname]", "--serverName", String, "Server Name (e.g. myapp.mydomain.com) [REQUIRED]") { |setup['serverName']|}
+  opt.on("-f [datafilepath]", "--filePath", String, "Export data file path (e.g. myapp-export-data.tgz)") { |setup['filePath']|}
   opt.on("-d [databasename]", "--database", String, "MySQL Database name") { |setup['database']|}
 
   opt.on("-h", "--help", "This text") { printHelp(opt) }

@@ -20,6 +20,15 @@ cat << EOF
 EOF
 }
 
+if[ -z $IDEGA_SCRIPTS_HOME ]; then
+	SCRIPTDIR=`dirname $0`
+	IDEGA_SCRIPTS_HOME=$SCRIPTDIR
+	export IDEGA_SCRIPTS_HOME
+	export PATH=$PATH:IDEGA_SCRIPTS_HOME/bin
+else
+	SCRIPTDIR=$IDEGA_SCRIPTS_HOME
+fi
+
 while getopts “hp:” OPTION
 do
      case $OPTION in

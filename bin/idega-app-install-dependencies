@@ -20,7 +20,7 @@ cat << EOF
 EOF
 }
 
-if[ -z $IDEGA_SCRIPTS_HOME ]; then
+if [ -z $IDEGA_SCRIPTS_HOME ]; then
 	SCRIPTDIR=`dirname $0`'/..'
 	IDEGA_SCRIPTS_HOME=$SCRIPTDIR
 	export IDEGA_SCRIPTS_HOME

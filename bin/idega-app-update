@@ -22,7 +22,14 @@ cat << EOF
 EOF
 }
 
-SCRIPTDIR=`dirname $0`
+if[ -z $IDEGA_SCRIPTS_HOME ]; then
+	SCRIPTDIR=`dirname $0`'/..'
+	IDEGA_SCRIPTS_HOME=$SCRIPTDIR
+	export IDEGA_SCRIPTS_HOME
+	export PATH=$PATH:IDEGA_SCRIPTS_HOME/bin
+else
+	SCRIPTDIR=$IDEGA_SCRIPTS_HOME
+fi
 
 USE_SSH=0
 VERBOSE=
@@ -102,7 +109,7 @@ if [ ! -e $WARFILENAME ]; then
 		if [ ! -e ~/.m2/settings.xml ]; then
 			#Copy default settings.xml
 			mkdir -p ~/.m2
-			cp $SCRIPTDIR/../templates/settings.xml ~/.m2/settings.xml
+			cp $SCRIPTDIR/templates/settings.xml ~/.m2/settings.xml
 		fi
 		echo "Using Maven to fetch $WARFILENAME\n"
 		mvn-fetch-artifact -g $WEBAPPGROUP -a $WEBAPPNAME -v $VERSION -t war

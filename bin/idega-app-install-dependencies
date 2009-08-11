@@ -21,7 +21,7 @@ EOF
 }
 
 if[ -z $IDEGA_SCRIPTS_HOME ]; then
-	SCRIPTDIR=`dirname $0`
+	SCRIPTDIR=`dirname $0`'/..'
 	IDEGA_SCRIPTS_HOME=$SCRIPTDIR
 	export IDEGA_SCRIPTS_HOME
 	export PATH=$PATH:IDEGA_SCRIPTS_HOME/bin

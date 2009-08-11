@@ -112,7 +112,7 @@ if [ ! -e $WARFILENAME ]; then
 			cp $SCRIPTDIR/templates/settings.xml ~/.m2/settings.xml
 		fi
 		echo "Using Maven to fetch $WARFILENAME\n"
-		mvn-fetch-artifact -g $WEBAPPGROUP -a $WEBAPPNAME -v $VERSION -t war
+		$SCRIPTDIR/bin/mvn-fetch-artifact -g $WEBAPPGROUP -a $WEBAPPNAME -v $VERSION -t war
 	elif [ $PROTOCOL == "ssh" ]; then
 		echo "Using SSH to fetch $WARFILENAME\n"
 		scp idegaweb@build.idega.is:/home/idegaweb/platform4/$WEBAPPGROUP/$WEBAPPNAME/target/$WEBAPPNAME-$VERSION.war .	

@@ -118,7 +118,13 @@ if [ ! -e $WARFILENAME ]; then
 		scp idegaweb@build.idega.is:/home/idegaweb/platform4/$WEBAPPGROUP/$WEBAPPNAME/target/$WEBAPPNAME-$VERSION.war .	
 	fi
 fi
-cp $WARFILENAME $TOMCATDIR/wars/ROOTNEW.war
+if [[ "$WARFILENAME" =~ "-SNAPSHOT.war" ]]; then
+	#move it if it ends with SNAPSHOT
+	mv $WARFILENAME $TOMCATDIR/wars/ROOTNEW.war
+else
+	#otherwise copy it for a fixed version
+	cp $WARFILENAME $TOMCATDIR/wars/ROOTNEW.war
+fi
 
 cd $TOMCATDIR/bin/
 ./shutdown.sh

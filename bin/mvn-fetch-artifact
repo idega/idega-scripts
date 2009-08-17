@@ -28,6 +28,15 @@ ARGV.options {
 
 }
 
+#Try to guess the maven2 location if it is not set:
+mvnhome=ENV["MAVEN2_HOME"]
+if(mvnhome.nil?)
+	mvnhome="/usr/local/maven2"
+	ENV["MAVEN2_HOME"]=mvnhome
+	path=ENV["PATH"]
+	newPath="#{path}:#{mvnhome}/bin"
+	ENV["PATH"]=newPath
+end
 
 artifactId = setup['artifactId']
 groupId = setup['groupId']

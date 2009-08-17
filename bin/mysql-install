@@ -6,7 +6,15 @@ printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009              #\n'
 printf '#############################################################\n'
 printf '\n'
 
-SCRIPTDIR=`dirname $0`
+if [ -z $IDEGA_SCRIPTS_HOME ]; then
+	SCRIPTDIR=`dirname $0`'/..'
+	IDEGA_SCRIPTS_HOME=$SCRIPTDIR
+	export IDEGA_SCRIPTS_HOME
+	export PATH=$PATH:IDEGA_SCRIPTS_HOME/bin
+else
+	SCRIPTDIR=$IDEGA_SCRIPTS_HOME
+fi
+
 INSTALL_MYSQL_CUSTOM="y"
 usage()
 {
@@ -73,7 +81,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 	    
 	    service mysql stop
 		cp /etc/my.cnf /etc/my.cnf.original
-		cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
+		cp $SCRIPTDIR/templates/mysql-my.cnf /etc/my.cnf
 	
 		#service mysql stop	
 		#OLDPID=/var/run/mysqld/mysqld.pid
@@ -96,7 +104,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		echo "Setting up MySQL"
 		yum -y install mysql mysql-server
 		cp /etc/my.cnf /etc/my.cnf.original
-		cp $SCRIPTDIR/../templates/mysql-my.cnf /etc/my.cnf
+		cp $SCRIPTDIR/templates/mysql-my.cnf /etc/my.cnf
 		if [ -z $MYSQLROOTPW ]; then
 			read -p 'Enter new mysql root password : ' MYSQLROOTPW
 		fi

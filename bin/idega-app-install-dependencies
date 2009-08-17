@@ -47,11 +47,11 @@ do
 done
 
 #Tested on CentOS 5.3
-	java-install
-	mvn-install
-	httpd-install
+	$SCRIPTDIR/bin/java-install
+	$SCRIPTDIR/bin/mvn-install
+	$SCRIPTDIR/bin/httpd-install
 	if [ -z $MYSQLROOTPW ]; then
-		mysql-install
+		$SCRIPTDIR/bin/mysql-install
 	else
-		mysql-install -p $MYSQLROOTPW
+		$SCRIPTDIR/bin/mysql-install -p $MYSQLROOTPW
 	fi

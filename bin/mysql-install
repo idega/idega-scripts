@@ -103,6 +103,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 				mkdir -p $MYSQLDATAPATH
 			fi
 			mv /var/lib/mysql /var/lib/mysql.old
+			mv /var/lib/mysql.old/* $MYSQLDATAPATH
 			ln -s $MYSQLDATAPATH /var/lib/mysql
 			chown -R mysql $MYSQLDATAPATH
 		fi
@@ -130,6 +131,7 @@ if [ ! -e /etc/init.d/mysqld ]; then
 				mkdir -p $MYSQLDATAPATH
 			fi
 			mv /var/lib/mysql /var/lib/mysql.old
+			mv /var/lib/mysql.old/* $MYSQLDATAPATH
 			ln -s $MYSQLDATAPATH /var/lib/mysql
 			chown -R mysql $MYSQLDATAPATH
 		fi

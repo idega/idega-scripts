@@ -48,7 +48,10 @@ if(ENV["IDEGA_SCRIPTS_HOME"].nil?)
 	scriptshome=File.expand_path(File.dirname(__FILE__))+"/.."
 	ENV["IDEGA_SCRIPTS_HOME"]=scriptshome
 	ENV["PATH"]=ENV["PATH"]+":#{scriptshome}/bin"
+else
+	scriptshome=ENV["IDEGA_SCRIPTS_HOME"]	
 end
+puts "scriptshome: #{scriptshome}"
 
 serverName = setup['serverName']
 filePath = setup['filePath']

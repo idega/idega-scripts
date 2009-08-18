@@ -81,7 +81,8 @@ slidepath = "#{folderPath}/slide"
 mysqlpath = "#{folderPath}/mysql"
 
 Dir.chdir("#{mysqlpath}")
-system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql.gz y")
+system("gunzip db.sql.gz")
+system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql y")
 
 serverslidedir = "#{serverPath}/bin"
 

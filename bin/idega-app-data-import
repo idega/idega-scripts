@@ -54,6 +54,8 @@ serverName = setup['serverName']
 filePath = setup['filePath']
 database = setup['database']
 
+fileName=""
+basedir=""
 if(filePath.nil?)
 	fileName = "#{serverName}-data.tgz"
 	basedir=Dir.pwd
@@ -61,7 +63,7 @@ if(filePath.nil?)
 else
 	slashindex = filePath.rindex("/")
 	fileName=filePath[slashindex+1,filePath.length]
-	basedir = fileName=filePath[0,slashindex]
+	basedir =filePath[0,slashindex]
 	Dir.chdir("#{basedir}")
 end
 
@@ -81,7 +83,7 @@ mysqlpath = "#{folderPath}/mysql"
 Dir.chdir("#{mysqlpath}")
 system("mysql-restore-from-dump #{database} db.sql.gz y")
 
-serverslidedir = " #{serverPath}/bin"
+serverslidedir = "#{serverPath}/bin"
 
 Dir.chdir("#{slidepath}")
 system("mv -f #{serverslidedir}/store #{serverslidedir}/store.old")

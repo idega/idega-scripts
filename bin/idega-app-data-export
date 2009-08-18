@@ -38,7 +38,7 @@ if(filePath.nil?)
 else
 	slashindex = filePath.rindex("/")
 	fileName=filePath[slashindex+1,filePath.length]
-	basedir = fileName=filePath[0,slashindex]
+	basedir=filePath[0,slashindex]
 end
 
 
@@ -63,7 +63,7 @@ end
 Dir.chdir("#{mysqlpath}")
 system("mysql-backup-db #{database} db")
 
-serverslidedir = " #{serverPath}/bin"
+serverslidedir = "#{serverPath}/bin"
 
 Dir.chdir("#{slidepath}")
 system("cp -r #{serverslidedir}/store .")

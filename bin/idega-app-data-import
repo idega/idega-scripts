@@ -43,7 +43,7 @@ ARGV.options {
   opt.parse!
 
 }
-
+scriptshome=""
 if(ENV["IDEGA_SCRIPTS_HOME"].nil?)
 	scriptshome=File.expand_path(File.dirname(__FILE__))+"/.."
 	ENV["IDEGA_SCRIPTS_HOME"]=scriptshome
@@ -81,7 +81,7 @@ slidepath = "#{folderPath}/slide"
 mysqlpath = "#{folderPath}/mysql"
 
 Dir.chdir("#{mysqlpath}")
-system("mysql-restore-from-dump #{database} db.sql.gz y")
+system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql.gz y")
 
 serverslidedir = "#{serverPath}/bin"
 

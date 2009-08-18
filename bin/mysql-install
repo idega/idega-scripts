@@ -28,10 +28,12 @@ cat << EOF
    -h                        Show this message
    -s                        Install Standard Mysql from (yum) repository insted of the default (Community) version of MySQL 5.1
    -p [password]             Set MySQL Root password
+   -d [datapath]             Set MySQL Data path/folder
+
 EOF
 }
 
-while getopts “hp:s” OPTION
+while getopts “hp:d:s” OPTION
 do
      case $OPTION in
          h)
@@ -40,6 +42,9 @@ do
              ;;
          p)
              MYSQLROOTPW=$OPTARG
+             ;;
+         d)
+             MYSQLDATAPATH=$OPTARG
              ;;
          s)
              INSTALL_MYSQL_CUSTOM="n"
@@ -91,7 +96,17 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		#chmod 755 /etc/rc.d/init.d/mysqld
 		#touch /var/lib/mysql/mysqld.pid
 		#chown mysql:mysql /var/lib/mysql/mysqld.pid
-	
+		
+		#Move the mysql data folder:
+		if [ ! -z $MYSQLDATAPATH ]; then
+			if [ ! -e $MYSQLDATAPATH ]; then
+				mkdir -p $MYSQLDATAPATH
+			fi
+			mv /var/lib/mysql /var/lib/mysql.old
+			ln -s $MYSQLDATAPATH /var/lib/mysql
+			chown -R mysql $MYSQLDATAPATH
+		fi
+		
 		service mysql start
 		
 		if [ -z $MYSQLROOTPW ]; then
@@ -108,6 +123,17 @@ if [ ! -e /etc/init.d/mysqld ]; then
 		if [ -z $MYSQLROOTPW ]; then
 			read -p 'Enter new mysql root password : ' MYSQLROOTPW
 		fi
+		
+		#Move the mysql data folder:
+		if [ ! -z $MYSQLDATAPATH ]; then
+			if [ ! -e $MYSQLDATAPATH ]; then
+				mkdir -p $MYSQLDATAPATH
+			fi
+			mv /var/lib/mysql /var/lib/mysql.old
+			ln -s $MYSQLDATAPATH /var/lib/mysql
+			chown -R mysql $MYSQLDATAPATH
+		fi
+		
 		/etc/init.d/mysqld start
 		mysqladmin -u root password $MYSQLROOTPW
 	fi

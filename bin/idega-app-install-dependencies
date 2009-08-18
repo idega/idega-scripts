@@ -15,8 +15,9 @@ cat << EOF
    A script to install all software required for idega
 
  OPTIONS:
-   -h      	Show this message
-   -p      	MySQL Root password
+   -h               Show this message
+   -p [password]    MySQL Root password
+   -d [path]        MySQL Data path
 EOF
 }
 
@@ -29,7 +30,7 @@ else
 	SCRIPTDIR=$IDEGA_SCRIPTS_HOME
 fi
 
-while getopts “hp:” OPTION
+while getopts “hp:d:” OPTION
 do
      case $OPTION in
          h)
@@ -38,6 +39,9 @@ do
              ;;
          p)
              MYSQLROOTPW=$OPTARG
+             ;;
+         d)
+             MYSQLDATAPATH=$OPTARG
              ;;
          ?)
              usage
@@ -50,8 +54,12 @@ done
 	$SCRIPTDIR/bin/java-install
 	$SCRIPTDIR/bin/mvn-install
 	$SCRIPTDIR/bin/httpd-install
-	if [ -z $MYSQLROOTPW ]; then
+	if [ -z $MYSQLROOTPW && -z $MYSQLDATAPATH ]; then
 		$SCRIPTDIR/bin/mysql-install
-	else
+	elif [ -z $MYSQLROOTPW ]; then
+		$SCRIPTDIR/bin/mysql-install -d $MYSQLDATAPATH
+	elif [ -z $MYSQLDATAPATH ]; then
 		$SCRIPTDIR/bin/mysql-install -p $MYSQLROOTPW
+	else
+		$SCRIPTDIR/bin/mysql-install -p $MYSQLROOTPW -d $MYSQLDATAPATH
 	fi

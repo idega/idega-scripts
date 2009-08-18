@@ -87,7 +87,7 @@ mysqlpath = "#{folderPath}/mysql"
 
 Dir.chdir("#{mysqlpath}")
 system("gunzip db.sql.gz")
-system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql y #{mysqlrootpw}")
+system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql n #{mysqlrootpw}")
 
 serverslidedir = "#{serverPath}/bin"
 

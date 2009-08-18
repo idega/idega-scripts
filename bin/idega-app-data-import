@@ -31,7 +31,7 @@ opt = nil
 ARGV.options {
   |opt|
 
-  opt.banner = "Usage:\n\idega-app-data-export [options]"
+  opt.banner = "Usage:\n\idega-app-data-import [options]"
 
   opt.on("Options:\n")
   opt.on("-s [appname]", "--serverName", String, "Server Name (e.g. myapp.mydomain.com) [REQUIRED]") { |setup['serverName']|}
@@ -44,6 +44,11 @@ ARGV.options {
 
 }
 
+if(ENV["IDEGA_SCRIPTS_HOME"].nil?)
+	scriptshome=File.expand_path(File.dirname(__FILE__))+"/.."
+	ENV["IDEGA_SCRIPTS_HOME"]=scriptshome
+	ENV["PATH"]=ENV["PATH"]+":#{scriptshome}/bin"
+end
 
 serverName = setup['serverName']
 filePath = setup['filePath']
@@ -80,7 +85,7 @@ serverslidedir = " #{serverPath}/bin"
 
 Dir.chdir("#{slidepath}")
 system("mv -f #{serverslidedir}/store #{serverslidedir}/store.old")
-system("mv -f #{serverslidedir}/store #{serverslidedir}/work.old")
+system("mv -f #{serverslidedir}/work #{serverslidedir}/work.old")
 system("cp -r store #{serverslidedir}")
 system("cp -r work #{serverslidedir}")
 

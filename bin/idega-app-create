@@ -435,14 +435,14 @@ else
 		mv -f $SERVERSPROPERTIESFILE.tmp $SERVERSPROPERTIESFILE
 	fi
 fi
-		
-#cd $SERVERNAME
-$SCRIPTDIR/bin/idega-app-update -v $WEBAPPVERSION
 
 if [ ! -z $IMPORTFILE ]; then
 	printf '\nNow importing data from importfile\n\n'
 	$SCRIPTDIR/bin/idega-app-data-import -s $SERVERNAME -d $DATABASENAME -f $IMPORTFILE
 fi
+		
+#cd $SERVERNAME
+$SCRIPTDIR/bin/idega-app-update -v $WEBAPPVERSION
 
 #Reload config files without severing connections to running processes
 #TODO MAKE SUDOERS WORK

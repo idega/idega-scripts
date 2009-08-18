@@ -438,7 +438,7 @@ fi
 
 if [ ! -z $IMPORTFILE ]; then
 	printf '\nNow importing data from importfile\n\n'
-	$SCRIPTDIR/bin/idega-app-data-import -s $SERVERNAME -d $DATABASENAME -f $IMPORTFILE
+	$SCRIPTDIR/bin/idega-app-data-import -s $SERVERNAME -d $DATABASENAME -f $IMPORTFILE -p $MYSQLROOTPW
 fi
 		
 #cd $SERVERNAME

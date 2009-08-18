@@ -9,6 +9,7 @@ printf '\n'
 DBNAME=$1
 DUMPFILE=$2
 USEUTF8=$3
+MYSQLROOTPW=$4
 
 if [ -z $DBNAME ]; then
 	read -p 'Enter database name to import into (it must exist): ' DBNAME
@@ -19,6 +20,9 @@ fi
 if [ -z $USEUTF8 ]; then
 	read -p 'Convert to UTF8 from LATIN1? (y/n) : ' USEUTF8
 fi
+if [ -z $MYSQLROOTPW ]; then
+	read -p 'MySQL Root Password: ' MYSQLROOTPW
+fi
 
 DBNAMEUTF8=$DBNAME'.utf8'
 
@@ -26,9 +30,9 @@ if [ "$USEUTF8" = "y" ]; then
         iconv -f LATIN1 -t UTF-8 $DUMPFILE > $DBNAMEUTF8
         #http://ez.no/developer/forum/general/convert_from_iso_8859_1_encoding_to_utf_8
 
-        mysql -uroot -p --default-character-set=utf8 $DBNAME < $DBNAMEUTF8
+        mysql -uroot -p$MYSQLROOTPW --default-character-set=utf8 $DBNAME < $DBNAMEUTF8
 else
-    	mysql -uroot -p --default-character-set=utf8 $DBNAME < $DUMPFILE
+    	mysql -uroot -p$MYSQLROOTPW --default-character-set=utf8 $DBNAME < $DUMPFILE
 fi
 
 

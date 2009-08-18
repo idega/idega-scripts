@@ -37,6 +37,7 @@ ARGV.options {
   opt.on("-s [appname]", "--serverName", String, "Server Name (e.g. myapp.mydomain.com) [REQUIRED]") { |setup['serverName']|}
   opt.on("-f [datafilepath]", "--filePath", String, "Export data file path (e.g. myapp-export-data.tgz)") { |setup['filePath']|}
   opt.on("-d [databasename]", "--database", String, "MySQL Database name") { |setup['database']|}
+  opt.on("-p [mysqlrootpassword]", "--password", String, "MySQL Root password") { |setup['mysqlrootpw']|}
 
   opt.on("-h", "--help", "This text") { printHelp(opt) }
 
@@ -56,6 +57,7 @@ puts "scriptshome: #{scriptshome}"
 serverName = setup['serverName']
 filePath = setup['filePath']
 database = setup['database']
+mysqlrootpw = setup['mysqlrootpw']
 
 fileName=""
 basedir=""
@@ -85,7 +87,7 @@ mysqlpath = "#{folderPath}/mysql"
 
 Dir.chdir("#{mysqlpath}")
 system("gunzip db.sql.gz")
-system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql y")
+system("#{scriptshome}/bin/mysql-restore-from-dump #{database} db.sql y #{mysqlrootpw}")
 
 serverslidedir = "#{serverPath}/bin"
 

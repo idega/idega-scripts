@@ -21,6 +21,21 @@
           </snapshots>
           <layout>default</layout>
         </repository>
+        <repository>
+          <id>idega2</id>
+          <name>Idega Backup Repository</name>
+          <url>http://repository2.idega.com/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <checksumPolicy>fail</checksumPolicy>
+          </snapshots>
+          <layout>default</layout>
+        </repository>
       </repositories>
       <pluginRepositories>
       </pluginRepositories>

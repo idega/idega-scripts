@@ -203,7 +203,8 @@ if [ -z $WEBAPPVERSION ]; then
 fi
 
 MYSQLDRIVERARCHIVEPATH=$TOMCATSFOLDER/mysql-connector-java-5.1.8.tar.gz
-MYSQLDRIVERDOWNLOADURL=http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.8.tar.gz/from/http://ftp.sunet.se/pub/unix/databases/relational/mysql/
+MYSQLDRIVERDOWNLOADURL=http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.8.tar.gz/from/http://mysql.rhnet.is/
+
 MYSQLDRIVERPATH=$TOMCATSFOLDER/mysql-connector-java-5.1.8/mysql-connector-java-5.1.8-bin.jar
 
 TOMCATVERSION=6.0.20

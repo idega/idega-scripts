@@ -16,6 +16,7 @@ cat << EOF
 
  OPTIONS:
    -h               Show this message
+   -f        		Force installation if this script has been run before
    -p [password]    MySQL Root password
    -d [path]        MySQL Data path
 EOF
@@ -29,8 +30,9 @@ if [ -z $IDEGA_SCRIPTS_HOME ]; then
 else
 	SCRIPTDIR=$IDEGA_SCRIPTS_HOME
 fi
+FORCEINSTALLATION=0
 
-while getopts “hp:d:” OPTION
+while getopts “hp:d:f” OPTION
 do
      case $OPTION in
          h)
@@ -43,6 +45,9 @@ do
          d)
              MYSQLDATAPATH=$OPTARG
              ;;
+         f)
+             FORCEINSTALLATION=1
+             ;;
          ?)
              usage
              exit
@@ -51,6 +56,7 @@ do
 done
 
 #Tested on CentOS 5.3
+if [[ ! -e /var/idega_dependencies_installed ]] || [[ $FORCEINSTALLATION -eq 1 ]]; then
 	$SCRIPTDIR/bin/java-install
 	$SCRIPTDIR/bin/mvn-install
 	$SCRIPTDIR/bin/httpd-install
@@ -63,3 +69,7 @@ done
 	else
 		$SCRIPTDIR/bin/mysql-install -p $MYSQLROOTPW -d $MYSQLDATAPATH
 	fi
+	touch /var/idega_dependencies_installed
+else
+	echo "Already installed"
+fi

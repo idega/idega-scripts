@@ -6,21 +6,66 @@ printf '# By Tryggvi Larusson (tryggvi@idega.com) 2009              #\n'
 printf '#############################################################\n'
 printf '\n'
 
+COMPILE_APACHE="true"
+REMOVE_PREVIOUS="true"
+
+if [ REMOVE_PREVIOUS == "true" ]; then
+	yum remove httpd
+fi
+
 #Tested on CentOS 5.3
 if [[ ! -e /etc/init.d/httpd ]]
 then
-	echo "Adding utterramblings repo"
-	if [ ! -e "/etc/yum.repos.d/utterramblings.repo" ]; then
-		rpm --import http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka
-		echo -ne "[utterramblings]\n" >> /etc/yum.repos.d/utterramblings.repo
-		echo -ne "name=Jason's Utter Ramblings Repo\n" >> /etc/yum.repos.d/utterramblings.repo
-		echo -ne "baseurl=http://www.jasonlitka.com/media/EL\$releasever/\$basearch/\n" >> /etc/yum.repos.d/utterramblings.repo
-		echo -ne "enabled=1\n" >> /etc/yum.repos.d/utterramblings.repo
-		echo -ne "gpgcheck=1\n" >> /etc/yum.repos.d/utterramblings.repo
-		echo -ne "gpgkey=http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka\n" >> /etc/yum.repos.d/utterramblings.repo
-	fi
-	echo "Setting up Apache httpd"
-	yum -y install httpd
+		yum -y install openssl openssl-devel
+        if [ $COMPILE_APACHE == "true" ]; then
+        		cd /tmp
+        		redhat_version=`cat /etc/redhat-release`
+				ARCH=`uname -m`
+				if [ $ARCH == "i686" ]; then
+					ARCH="i386"
+				elif [ $ARCH == "i586" ]; then
+					ARCH="i386"
+				elif [ $ARCH == "i486" ]; then
+					ARCH="i386"
+				fi
+				
+        		if [ $redhat_version == "CentOS release 5.2 (Final)" && $ARCH == "i386" ]; then
+        			wget http://repository2.idega.com/httpd-2.2.8-$ARCH-centos52.tar.gz
+        			cd httpd-2.2.8/
+        			make install
+        		elif [ $redhat_version == "CentOS release 5.3 (Final)" && $ARCH == "x86_64" ]; then
+        			wget http://repository2.idega.com/httpd-2.2.8-$ARCH-centos53.tar.gz
+        			cd httpd-2.2.8/
+        			make install
+        		else
+					yum -y install gcc glibc-devel apr-util-devel make
+					git clone git://github.com/idega/httpd.git
+					cd httpd
+					git checkout -b idega_2.2.8 origin/idega_2.2.8
+					#wget http://apache.dataphone.se/httpd/httpd-2.2.13.tar.gz
+					#wget http://repository2.idega.com/httpd-2.2.8.tar.gz
+					#scp idegaweb@server01skyrr.idega.com:/var/www/webs/repository2.idega.com/httpd-2.2.8.tar.gz .
+					#tar xfvz httpd-2.2.8.tar.gz
+	                #cd httpd
+	                ./configure --prefix=/usr/local/apache2 --enable-mods-shared="all proxy proxy-ajp proxy-balancer filter deflate expires ssl rewrite mime-magic mem-cache info disk-cache dav dav-fs dav-lock" --with-mpm=worker
+	                make
+	                make install
+	                cd..
+        		fi
+        else
+			echo "Adding utterramblings repo"
+			if [ ! -e "/etc/yum.repos.d/utterramblings.repo" ]; then
+				rpm --import http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka
+				echo -ne "[utterramblings]\n" >> /etc/yum.repos.d/utterramblings.repo
+				echo -ne "name=Jason's Utter Ramblings Repo\n" >> /etc/yum.repos.d/utterramblings.repo
+				echo -ne "baseurl=http://www.jasonlitka.com/media/EL\$releasever/\$basearch/\n" >> /etc/yum.repos.d/utterramblings.repo
+				echo -ne "enabled=1\n" >> /etc/yum.repos.d/utterramblings.repo
+				echo -ne "gpgcheck=1\n" >> /etc/yum.repos.d/utterramblings.repo
+				echo -ne "gpgkey=http://www.jasonlitka.com/media/RPM-GPG-KEY-jlitka\n" >> /etc/yum.repos.d/utterramblings.repo
+			fi
+			echo "Setting up Apache httpd"
+			yum -y install httpd
+        fi
 	/etc/init.d/httpd start
 else
 	echo "Apache httpd already installed"

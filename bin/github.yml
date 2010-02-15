@@ -1,0 +1,16 @@
+  #
+  # Octopi GitHub API configuration file
+  #
+
+  #You may need to update this file:
+
+  # GitHub user login and token
+  login: XXX 
+  token: XXX
+
+  # Trace level
+  # Possible values:
+  #   false - no tracing, same as if the param is ommited
+  #   true  - will output each POST or GET operation to the stdout
+  #   curl  - same as true, but in addition will output the curl equivalent of each command (for debugging)
+  trace: curl

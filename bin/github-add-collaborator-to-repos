@@ -1,0 +1,97 @@
+#!/usr/bin/ruby
+
+require 'rubygems'
+require 'octopi'
+require 'curb'
+require 'yaml'
+require 'ftools'
+require 'optparse'
+
+include Octopi
+
+githubconf = "github.yml"
+githubsettings = YAML::load_file(githubconf)
+login = githubsettings['login']
+token = githubsettings['token']
+
+def printHelp(options)
+	puts options
+	exit 0 
+end
+setup = {:outputDirectory=>"."}
+opt = nil
+ARGV.options {
+  |opt|
+ 
+  opt.banner = "Usage:\n\github-add-collaborator-to-repos [options]"
+ 
+  opt.on("Options:\n")
+  opt.on("-c [collaboratorlist]", "--collaboratorlist", String, "Comma separated list of coontributors (github userids)") { |setup['collaborators']|}
+  opt.on("-o [owning_user]", "--owner", String, "User for which to find repositories under (default idega)") { |setup['owner']|}
+  opt.on("-s [sleep seconds]", "--sleep", String, "Sleep between requrests") { |setup['sleep']|}
+
+  opt.on("-h", "--help", "This text") { printHelp(opt) }
+ 
+  opt.parse!
+ 
+}
+
+
+collaborators = []
+
+finduser=setup['owner']
+if(finduser.nil?)
+	finduser="idega"
+end
+scollaborators = setup['collaborators']
+if(!scollaborators.nil?)
+	collaborators=scollaborators.split(",")
+else	
+	printHelp(opt)
+end
+
+sleep_secs=setup['sleep']
+if(!sleep_secs.nil?)
+	sleep_secs=sleep_secs.to_f
+end
+
+def init_repo(login,reponame)
+        currentdir = Dir.getwd
+        repodir = "#{currentdir}/#{reponame}"
+        File.makedirs repodir
+        Dir.chdir repodir
+        system("git init")
+        system("touch README")
+        system("git add README")
+        system("git commit -m 'first commit'")
+        repourl = "git@github.com:#{login}/#{reponame}.git"
+        p "repourl: #{repourl}"
+        system("git remote add origin #{repourl}")
+        system("git push origin master")
+end
+
+
+authenticated_with :config => githubconf do |g|
+	user=g.user
+	repos = Repository.find(finduser,nil)
+	repos.each do |repo|
+		 
+	     reponame=repo.name
+	     collaborators.each do |collaborator|
+	      p "Updating repo: #{repo.name} and adding #{collaborator} as collaborator"
+		  url = "http://github.com/api/v2/yaml/repos/collaborators/#{reponame}/add/#{collaborator}"
+		  p url
+		  c = Curl::Easy.http_post(url,
+			Curl::PostField.content('login', login),
+			Curl::PostField.content('token', token)
+	               )
+		  puts c.body_str
+		  #c.perform
+		  if(!sleep_secs.nil?)
+		  	sleep sleep_secs
+		  end	  
+		end
+	end
+
+end
+

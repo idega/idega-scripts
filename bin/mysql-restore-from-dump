@@ -34,9 +34,3 @@ if [ "$USEUTF8" = "y" ]; then
 else
     	mysql -uroot -p$MYSQLROOTPW --default-character-set=utf8 $DBNAME < $DUMPFILE
 fi
-
-
-
-
-
-

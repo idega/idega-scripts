@@ -59,7 +59,8 @@ thread_concurrency = 4
 ########
 #idega tweaks
 #bind-address = 217.8.253.67
-#didn't start default-storage-engine=INNODB
+#didn't start
+default-storage-engine=INNODB
 
 long_query_time         = 1
 log-slow-queries        = /var/log/mysql-slow.log

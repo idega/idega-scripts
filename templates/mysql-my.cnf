@@ -23,13 +23,6 @@
 port		= 3306
 socket		= /var/lib/mysql/mysql.sock
 
-########
-#idega tweaks
-
-default-character-set=utf8
-
-########
-
 # Here follows entries for some specific programs
 
 # The MySQL server

@@ -1,0 +1,47 @@
+{
+    "name":"Idega",
+    "baseUri":"127.0.0.1:8080/munizapp",
+    "logoUrl":"http://idega.github.io/images/idega_i_glossy_512.png",
+    "waterMarkUrl":"http://idega.is/",
+    "types":[{
+        "type":"Type 1",
+        "locale":"en",
+        "subTypes":[{
+            "type":"Sub-type 1",
+            "locale":"en"
+         }]
+     }],
+         
+    "categories":[{
+    "category":"Category 1",
+    "locale":"en",
+    "subCategories":[{
+        "category":"Sub category 1",
+        "locale":"en"
+        }]
+    }],
+    "statuses":[{
+        "status":"Finished",
+        "id":2,
+        "locale":"en"
+        },{
+        "status":"Svarat",
+        "id":2,
+        "locale":"sv"
+        },{
+        "status":"Lokið",
+        "id":2,
+        "locale":"is"
+    }],
+    "backend":true,
+    "centerLocationLon":10.112233,
+    "centerLocationLat":20.445566,
+    "areaRadius":25,
+    "hideDescription":false,
+    "tintColor":"#123456",
+    "backendUrl":"http://idega.is/",
+    "transparency":{
+        "id":1,
+        "level":"everything"
+    }
+}

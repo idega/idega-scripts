@@ -14,7 +14,7 @@ MYSQL_DATABASE_PASSWORD="password";
 
 REPOSITORY_PATH="$HOME/tomcat/$DOMAIN_NAME";
 
-BUCKET_PATH="s3://idega-default";
+BUCKET_PATH="s3://idega-default/backup/$DOMAIN_NAME/$FORMATTED_DATE/";
 
 FORMATTED_DATE=$(date +%Y-%m-%d);
 

@@ -28,9 +28,6 @@ REPOSITORY_ARCHIVE_NAME="$DOMAIN_NAME-$FORMATTED_DATE.tar.gz";
 DATABASE_DUMP_FILE_PATH="$FOLDER_NAME/$DATABASE_DUMP_FILE_NAME";
 REPOSITORY_ARCHIVE_PATH="$FOLDER_NAME/$REPOSITORY_ARCHIVE_NAME";
 
-OLD_FORMATTED_DATE=$(date +%Y-%m-%d -d "7 days ago");
-OLD_FOLDER_NAME="$DOMAIN_BACKUP_FOLDER$OLD_FORMATTED_DATE";
-
 echo "Creating backup for: $DOMAIN_NAME on: $FORMATTED_DATE";
 
 echo "Backup will be saved in directory: $FOLDER_NAME";
@@ -87,9 +84,14 @@ else
 	echo "Archive by path: $REPOSITORY_ARCHIVE_PATH already exist!";
 fi
 
+OLD_FORMATTED_DATE=$(date +%Y-%m-%d -d "7 days ago");
+OLD_FOLDER_NAME="$DOMAIN_BACKUP_FOLDER$OLD_FORMATTED_DATE";
+OLD_BUCKET_PATH="s3://idega-default/backup/$DOMAIN_NAME/$OLD_FORMATTED_DATE/";
+
 if [ -d "$OLD_FOLDER_NAME" ]; then
 	echo "Removing directory: $OLD_FOLDER_NAME";
 	rm -rf $OLD_FOLDER_NAME;
+	s3cmd del $OLD_BUCKET_PATH;
 	echo "Backup by date: $OLD_FORMATTED_DATE is removed!";
 else
         echo "No old backup was found!";

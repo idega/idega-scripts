@@ -1,6 +1,6 @@
 {
     "name":"Idega",
-    "baseUri":"127.0.0.1:8080/munizapp",
+    "baseUri":"https://munizapp.sidan.is/mobile/munizapp",
     "logoUrl":"http://idega.github.io/images/idega_i_glossy_512.png",
     "waterMarkUrl":"http://idega.is/",
     "types":[{

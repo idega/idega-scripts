@@ -91,7 +91,7 @@ OLD_BUCKET_PATH="s3://idega-default/backup/$DOMAIN_NAME/$OLD_FORMATTED_DATE/";
 if [ -d "$OLD_FOLDER_NAME" ]; then
 	echo "Removing directory: $OLD_FOLDER_NAME";
 	rm -rf $OLD_FOLDER_NAME;
-	s3cmd del $OLD_BUCKET_PATH;
+	s3cmd del --recursive $OLD_BUCKET_PATH;
 	echo "Backup by date: $OLD_FORMATTED_DATE is removed!";
 else
         echo "No old backup was found!";

@@ -6,6 +6,8 @@ echo "# By Martynas Stakė (martynas@idega.is) 2014                  #\n"
 echo "###############################################################\n"
 echo "\n"
 
+. /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh
+
 DOMAIN_NAME="idega.is";
 
 ORACLE_DATABASE_SID="xe";
@@ -27,6 +29,9 @@ REPOSITORY_ARCHIVE_NAME="$DOMAIN_NAME-$FORMATTED_DATE.tar.gz";
 
 DATABASE_DUMP_FILE_PATH="$FOLDER_NAME/$DATABASE_DUMP_FILE_NAME";
 REPOSITORY_ARCHIVE_PATH="$FOLDER_NAME/$REPOSITORY_ARCHIVE_NAME";
+
+ORACLE_LOG="$FOLDER_NAME/export.log";
+ORACLE_OUTPUT="$FOLDER_NAME/output.log";
 
 echo "Creating backup for: $DOMAIN_NAME on: $FORMATTED_DATE";
 
@@ -50,7 +55,9 @@ fi
 if [ ! -f "$DATABASE_DUMP_FILE_PATH" ]; then
 	echo "Creating dump file by path: $DATABASE_DUMP_FILE_PATH";
 	exp $ORACLE_DATABASE_USERNAME/$ORACLE_DATABASE_PASSWORD@$ORACLE_DATABASE_SID \
-		file=$DATABASE_DUMP_FILE_PATH;
+                file=$DATABASE_DUMP_FILE_PATH \
+                log=$ORACLE_LOG \
+                2>$ORACLE_OUTPUT;
 	if [ -f "$DATABASE_DUMP_FILE_PATH" ]; then
         	echo "Copying database dump to bucket!";
                 s3cmd put $DATABASE_DUMP_FILE_PATH $BUCKET_PATH;
@@ -85,7 +92,7 @@ OLD_BUCKET_PATH="s3://idega-default/backup/$DOMAIN_NAME/$OLD_FORMATTED_DATE/";
 if [ -d "$OLD_FOLDER_NAME" ]; then
 	echo "Removing directory: $OLD_FOLDER_NAME";
 	rm -rf $OLD_FOLDER_NAME;
-	s3cmd del $OLD_BUCKET_PATH;
+	s3cmd del --recursive $OLD_BUCKET_PATH;
 	echo "Backup by date: $OLD_FORMATTED_DATE is removed!";
 else
         echo "No old backup was found!";

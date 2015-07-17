@@ -11,4 +11,4 @@ curl --insecure \
     --include \
     --request GET \
     --header "Accept: application/json" \
-    "http://www.golf.is/rest/teeTimeInfo?personalID=2903612499&clubID=84&courseID=33"
+    "http://www.golf.is/rest/teeTimeInfo?personalID=2903612499&clubID=84&courseID=33&date=2015-07-05"

@@ -10,4 +10,5 @@ printf '\n'
 curl --insecure \
     --include \
     --request GET \
-    127.0.0.1:8080/rest/clubs
+    "127.0.0.1:8080/api/clubs?personalID=2903612499&abbreviation=gkg"
+

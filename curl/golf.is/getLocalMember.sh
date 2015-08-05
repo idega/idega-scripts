@@ -11,4 +11,4 @@ curl --insecure \
     --include \
     --request GET \
     --header "Accept: application/json" \
-    127.0.0.1:8080/rest/golferSearch/?personalID=2903612499;
+    127.0.0.1:8080/api/golferSearch/?personalID=2903612499;

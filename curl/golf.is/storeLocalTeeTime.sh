@@ -11,8 +11,4 @@ curl --insecure \
     --include \
     --request POST \
     --header "Accept: application/json" \
-    --data "personalID=2903612499" \
-    --data "courseID=79" \
-    --data "date=2015-08-07" \
-    --data "groupNumber=66" \
-    "127.0.0.1:8080/api/teeTimes"
+    "127.0.0.1:8080/api/teeTimes?personalID=2903612499&courseID=79&date=2015-08-07&groupNumber=66"

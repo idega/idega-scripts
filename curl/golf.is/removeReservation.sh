@@ -11,4 +11,4 @@ curl --insecure \
     --include \
     --request DELETE \
     --header "Accept: application/json" \
-    "http://www.golf.is/api/teeTimes/reservation?courseId=33&date=2015-08-01&groupNumber=40"
+    "http://www.golf.is/api/teeTimes/reservation?reservationKey=34a939b8-c05e-4e8b-a98f-0c480632e89a"

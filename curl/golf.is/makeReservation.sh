@@ -13,4 +13,4 @@ curl --insecure \
     --header "Accept: application/json" \
     --header "Content-Type:application/json" \
     --data @resources/reservation.json \
-    "127.0.0.1:8080/api/teeTimes/reservation"
+    "http://www.golf.is/api/teeTimes/reservation"

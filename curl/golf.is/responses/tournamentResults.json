@@ -1,0 +1,272 @@
+{ "currentRound" : 1,
+  "field" : "Hlíðavöllur",
+  "gender" : "male",
+  "holesPars" : [ { "nr" : 1,
+        "par" : 3
+      },
+      { "nr" : 2,
+        "par" : 5
+      },
+      { "nr" : 3,
+        "par" : 4
+      },
+      { "nr" : 4,
+        "par" : 4
+      },
+      { "nr" : 5,
+        "par" : 4
+      },
+      { "nr" : 6,
+        "par" : 5
+      },
+      { "nr" : 7,
+        "par" : 5
+      },
+      { "nr" : 8,
+        "par" : 4
+      },
+      { "nr" : 9,
+        "par" : 3
+      },
+      { "nr" : 10,
+        "par" : 4
+      },
+      { "nr" : 11,
+        "par" : 4
+      },
+      { "nr" : 12,
+        "par" : 3
+      },
+      { "nr" : 13,
+        "par" : 4
+      },
+      { "nr" : 14,
+        "par" : 4
+      },
+      { "nr" : 15,
+        "par" : 3
+      },
+      { "nr" : 16,
+        "par" : 4
+      },
+      { "nr" : 17,
+        "par" : 5
+      },
+      { "nr" : 18,
+        "par" : 4
+      }
+    ],
+  "logo" : "/idegaweb/bundles/is.idega.idegaweb.golf.bundle/resources/images/Eimskips.png",
+  "name" : "***** Opna 1. maí mót GM og ECCO *****",
+  "numberOfRounds" : 1,
+  "overallResults" : { "currentRound" : "Hringur 1",
+      "gender" : "male",
+      "leaderClub" : "GM",
+      "leaderFullName" : "Kristján Þór Einarsson",
+      "leaderMiddleName" : "Þór",
+      "leaderName" : "Kristján",
+      "leaderScore" : "-4",
+      "leaderSurname" : "Einarsson",
+      "standings" : [ { "club" : "GM",
+            "fullName" : "Kristján Þór Einarsson",
+            "holes" : "F",
+            "middleName" : "Þór",
+            "name" : "Kristján",
+            "position" : "1",
+            "rounds" : [ { "name" : "H1",
+                  "result" : "-4"
+                },
+                { "name" : "H2",
+                  "result" : "PAR"
+                }
+              ],
+            "seat" : "1",
+            "surname" : "Einarsson",
+            "total" : "-4"
+          },
+          { "club" : "GR",
+            "fullName" : "Jóhann Hreiðarsson",
+            "holes" : "0",
+            "name" : "Jóhann",
+            "position" : "170",
+            "seat" : "169",
+            "surname" : "Hreiðarsson",
+            "total" : ""
+          }
+        ]
+    },
+  "rounds" : [ { "leaderClub" : "GM",
+        "leaderFullName" : "Kristján Þór Einarsson",
+        "leaderMiddleName" : "Þór",
+        "leaderName" : "Kristján",
+        "leaderScore" : "-4",
+        "leaderSurname" : "Einarsson",
+        "name" : "Hringur 1",
+        "results" : [ { "club" : "GM",
+              "fullName" : "Kristján Þór Einarsson",
+              "holes" : [ { "name" : "1",
+                    "score" : "3",
+                    "type" : "par"
+                  },
+
+                  { "name" : "3",
+                    "score" : "3",
+                    "type" : "birdie"
+                  },
+                  { "name" : "4",
+                    "score" : "3",
+                    "type" : "birdie"
+                  },
+                  { "name" : "5",
+                    "score" : "5",
+                    "type" : "bogey"
+                  },
+                  { "name" : "6",
+                    "score" : "4",
+                    "type" : "birdie"
+                  },
+                  { "name" : "7",
+                    "score" : "4",
+                    "type" : "birdie"
+                  },
+                  { "name" : "8",
+                    "score" : "3",
+                    "type" : "birdie"
+                  },
+                  { "name" : "9",
+                    "score" : "3",
+                    "type" : "par"
+                  },
+                  { "name" : "10",
+                    "score" : "3",
+                    "type" : "birdie"
+                  },
+                  { "name" : "11",
+                    "score" : "4",
+                    "type" : "par"
+                  },
+                  { "name" : "12",
+                    "score" : "3",
+                    "type" : "par"
+                  },
+                  { "name" : "13",
+                    "score" : "5",
+                    "type" : "bogey"
+                  },
+                  { "name" : "14",
+                    "score" : "4",
+                    "type" : "par"
+                  },
+                  { "name" : "15",
+                    "score" : "4",
+                    "type" : "bogey"
+                  },
+                  { "name" : "16",
+                    "score" : "5",
+                    "type" : "bogey"
+                  },
+                  { "name" : "17",
+                    "score" : "5",
+                    "type" : "par"
+                  },
+                  { "name" : "18",
+                    "score" : "3",
+                    "type" : "birdie"
+                  }
+                ],
+              "middleName" : "Þór",
+              "name" : "Kristján",
+              "position" : "1",
+              "score" : "-4",
+              "seat" : "1",
+              "surname" : "Einarsson",
+              "total" : "-4"
+            },
+            { "club" : "GR",
+              "fullName" : "Jóhann Hreiðarsson",
+              "holes" : [ { "name" : "1",
+                    "score" : ""
+                  },
+                  { "name" : "2",
+                    "score" : ""
+                  },
+                  { "name" : "3",
+                    "score" : ""
+                  },
+                  { "name" : "4",
+                    "score" : ""
+                  },
+                  { "name" : "5",
+                    "score" : ""
+                  },
+                  { "name" : "6",
+                    "score" : ""
+                  },
+                  { "name" : "7",
+                    "score" : ""
+                  },
+                  { "name" : "8",
+                    "score" : ""
+                  },
+                  { "name" : "9",
+                    "score" : ""
+                  },
+                  { "name" : "10",
+                    "score" : ""
+                  },
+                  { "name" : "11",
+                    "score" : ""
+                  },
+                  { "name" : "12",
+                    "score" : ""
+                  },
+                  { "name" : "13",
+                    "score" : ""
+                  },
+                  { "name" : "14",
+                    "score" : ""
+                  },
+                  { "name" : "15",
+                    "score" : ""
+                  },
+                  { "name" : "16",
+                    "score" : ""
+                  },
+                  { "name" : "17",
+                    "score" : ""
+                  },
+                  { "name" : "18",
+                    "score" : ""
+                  }
+                ],
+              "name" : "Jóhann",
+              "position" : "170",
+              "score" : "",
+              "seat" : "169",
+              "surname" : "Hreiðarsson",
+              "total" : ""
+            }
+          ],
+        "roundNumber" : 1
+      } ],
+  "sponsors" : [ { "link" : "http://www.eimskip.is",
+        "logo" : "/static/sponsors/eimskip.png"
+      },
+      { "link" : "http://www.olgerdin.is",
+        "logo" : "/static/sponsors/olgerdin.png"
+      },
+      { "link" : "http://www.siminn.is",
+        "logo" : "/static/sponsors/siminn.png"
+      },
+      { "link" : "http://www.kpmg.is",
+        "logo" : "/static/sponsors/kpmg.png"
+      },
+      { "link" : "http://www.securitas.is",
+        "logo" : "/static/sponsors/securitas.png"
+      },
+      { "link" : "http://www.nyherji.is",
+        "logo" : "/iw_cache/nyherji.png"
+      }
+    ],
+  "unionLogo" : "/idegaweb/bundles/is.idega.idegaweb.golf.bundle/resources/images/union_logo.png"
+}

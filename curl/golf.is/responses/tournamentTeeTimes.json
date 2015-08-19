@@ -1,0 +1,14 @@
+[ { "roundName" : "Hringur 1",
+    "roundNumber" : 1,
+    "teeTimes" : [ { "club" : "",
+          "handicap" : "100.0",
+          "playTime" : "1.5.2015 07:40",
+          "player" : "1. maí"
+        },
+        { "club" : "GBO",
+          "handicap" : "6.3",
+          "playTime" : "1.5.2015 16:00",
+          "player" : "Gunnar Már Elíasson            "
+        }
+      ]
+  } ]

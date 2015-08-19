@@ -1,0 +1,25 @@
+[ { "groupName" : "Karlar, opin mot",
+    "scores" : [ { "club" : "GM",
+          "difference" : -4,
+          "name" : "Kristján Þór Einarsson",
+          "personalID" : "**********",
+          "playedHoles" : "F",
+          "position" : 1,
+          "rounds" : [ 68 ],
+          "totalDifference" : -4
+        }
+      ]
+  },
+  { "groupName" : "Konur, opin mot",
+    "scores" : [ { "club" : "GM",
+          "difference" : 23,
+          "name" : "Hanna Þrúður Ólafsdóttir",
+          "personalID" : "**********",
+          "playedHoles" : "F",
+          "position" : 1,
+          "rounds" : [ 95 ],
+          "totalDifference" : 23
+        }
+      ]
+  }
+]

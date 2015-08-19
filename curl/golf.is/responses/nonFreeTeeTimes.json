@@ -1,0 +1,22 @@
+[ { "freeSlots" : 3,
+    "golfers" : [ { "club" : "GKG",
+          "dismissal" : null,
+          "group" : "1",
+          "handicap" : 20.4,
+          "id" : "18374",
+          "name" : "Einar Þór Bjarnason",
+          "personalID" : "**********",
+          "registeredBy" : "Einar Þór Bjarnason",
+          "time" : null
+        } ],
+    "groupNumber" : 1,
+    "time" : 1434349800000,
+    "tournament" : null
+  },
+  { "freeSlots" : 0,
+    "golfers" : [  ],
+    "groupNumber" : 52,
+    "time" : 1434380400000,
+    "tournament" : "Punktamót GKG 2. hringur (eftir hádegi)"
+  }
+]

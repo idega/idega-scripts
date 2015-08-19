@@ -1,0 +1,21 @@
+[ { "club" : "GKG",
+    "dismissal" : null,
+    "group" : "10",
+    "handicap" : 30.9,
+    "id" : "25440",
+    "name" : "Þorvarður Gunnarsson",
+    "personalID" : "**********",
+    "registeredBy" : "Þorvarður Gunnarsson",
+    "time" : "2015-06-15 08:00:00"
+  },
+  { "club" : "GKG",
+    "dismissal" : null,
+    "group" : "10",
+    "handicap" : 33.7,
+    "id" : "25441",
+    "name" : "Þórlaug Ragnarsdóttir",
+    "personalID" : "**********",
+    "registeredBy" : "Þorvarður Gunnarsson",
+    "time" : "2015-06-15 08:00:00"
+  }
+]

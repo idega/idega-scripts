@@ -1,0 +1,39 @@
+[ { "freeSlots" : 4,
+    "golfers" : [  ],
+    "groupNumber" : 1,
+    "time" : 1439965800000,
+    "tournament" : null
+  },
+  { "freeSlots" : 2,
+    "golfers" : [ { "club" : "GKG",
+          "dismissal" : null,
+          "group" : "15",
+          "handicap" : 25.9,
+          "id" : "41875",
+          "name" : "Jörundur Þórðarson",
+          "personalID" : "**********",
+          "registeredBy" : "Jörundur Þórðarson",
+          "time" : null
+        },
+        { "club" : "GKG",
+          "dismissal" : null,
+          "group" : "15",
+          "handicap" : 21.8,
+          "id" : "24204",
+          "name" : "Albert Þór Jónsson",
+          "personalID" : "**********",
+          "registeredBy" : "Jörundur Þórðarson",
+          "time" : null
+        }
+      ],
+    "groupNumber" : 15,
+    "time" : 1439974200000,
+    "tournament" : null
+  },
+  { "freeSlots" : 4,
+    "golfers" : [  ],
+    "groupNumber" : 93,
+    "time" : 1440021000000,
+    "tournament" : null
+  }
+]

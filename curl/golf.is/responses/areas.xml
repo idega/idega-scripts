@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<areas>
+        <area>
+                <id>9</id>
+                <name>Aðrir</name>
+                <localizedKey>union_area.other</localizedKey>
+                <clubs>
+                        <club>
+                                <id>2015</id>
+                                <abbreviation>GEH</abbreviation>
+                                <name>Einherjar</name>
+                                <email>einherjar@golf.is</email>
+                                <phone>664-1100</phone>
+                                <webpage>einherjar.golf.is</webpage>
+                                <latitude />
+                                <longitude />
+                                <foundedYear>0</foundedYear>
+                                <onlineStartingtime>false</onlineStartingtime>
+                        </club>
+                        <club>
+                                <id>2013</id>
+                                <abbreviation>GSFÍ</abbreviation>
+                                <name>Golfsamtök fatlaðra á Íslandi</name>
+                                <email>oliragnars@internet.is</email>
+                                <phone>514-4080</phone>
+                                <webpage>www.golf.is/gsfi</webpage>
+                                <foundedYear>0</foundedYear>
+                                <onlineStartingtime>false</onlineStartingtime>
+                        </club>
+                        <club>
+                                <id>2010</id>
+                                <abbreviation>IPGA</abbreviation>
+                                <name>Samtök atvinnukylfinga</name>
+                                <email>agnarj@simnet.is</email>
+                                <phone>514-4050</phone>
+                                <webpage>www.pga.is</webpage>
+                                <foundedYear>0</foundedYear>
+                                <onlineStartingtime>false</onlineStartingtime>
+                        </club>
+                        <club>
+                                <id>2009</id>
+                                <abbreviation>LEK</abbreviation>
+                                <name>Landssamtök eldri kylfinga</name>
+                                <email>lek@golf.is</email>
+                                <phone>772-4950 </phone>
+                                <webpage>www.lek.is</webpage>
+                                <latitude />
+                                <longitude />
+                                <foundedYear>0</foundedYear>
+                                <onlineStartingtime>false</onlineStartingtime>
+                        </club>
+                        <club>
+                                <id>2011</id>
+                                <abbreviation>SÍGÍ</abbreviation>
+                                <name>Samtök íþrótta- og golfvallarstarfsmanna á Íslandi</name>
+                                <webpage>http://www.sigi.is</webpage>
+                                <foundedYear>0</foundedYear>
+                                <onlineStartingtime>false</onlineStartingtime>
+                        </club>
+                </clubs>
+        </area>
+</areas>

@@ -1,0 +1,112 @@
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tournaments>
+        <tournament closed="false">
+                <id>21401</id>
+                <name>Egils Kristals mótaröðin (6)</name>
+                <field>Leirdalur</field>
+                <startDate>2015-08-12</startDate>
+                <endDate>2015-08-12</endDate>
+                <rounds>
+                        <round>
+                                <number>1</number>
+                                <startDate>2015-08-12 00:00:00.0</startDate>
+                                <endDate>2015-08-12 03:00:00.0</endDate>
+                                <csa>0</csa>
+                                <cba>0</cba>
+                        </round>
+                </rounds>
+                <groups>
+                        <group>
+                                <name>Unglingamótaröð GKG - Strákar 15-18 ára</name>
+                                <tees>Gulir </tees>
+                                <gender>M</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>36.0</handicapMax>
+                                <ageMin>15</ageMin>
+                                <ageMax>18</ageMax>
+                        </group>
+                        <group>
+                                <name>Unglingamótaröð GKG - Strákar 14 ára og yngri</name>
+                                <tees>Rauðir karla</tees>
+                                <gender>M</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>36.0</handicapMax>
+                                <ageMin>0</ageMin>
+                                <ageMax>14</ageMax>
+                        </group>
+                        <group>
+                                <name>Unglingamótaröð GKG - Stelpur 14 ára og yngri</name>
+                                <tees>Rauðir kvenna</tees>
+                                <gender>F</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>40.0</handicapMax>
+                                <ageMin>0</ageMin>
+                                <ageMax>14</ageMax>
+                        </group>
+                        <group>
+                                <name>Unglingamótaröð GKG - Stelpur 15-18 ára</name>
+                                <tees>Rauðir kvenna</tees>
+                                <gender>F</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>40.0</handicapMax>
+                                <ageMin>15</ageMin>
+                                <ageMax>18</ageMax>
+                        </group>
+                        <group>
+                                <name>Meistaraflokkur karla</name>
+                                <tees>Hvítir</tees>
+                                <gender>M</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>5.0</handicapMax>
+                                <ageMin>0</ageMin>
+                                <ageMax>100</ageMax>
+                        </group>
+                        <group>
+                                <name>Meistaraflokkur kvenna</name>
+                                <tees>Bláir kvenna</tees>
+                                <gender>F</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>50.0</handicapMax>
+                                <ageMin>0</ageMin>
+                                <ageMax>100</ageMax>
+                        </group>
+                </groups>
+        </tournament>
+        <tournament closed="true">
+                <id>20947</id>
+                <name>Starfsmannamót VÍS</name>
+                <field>Leirdalur</field>
+                <startDate>2015-08-15</startDate>
+                <endDate>2015-08-15</endDate>
+                <rounds>
+                        <round>
+                                <number>1</number>
+                                <startDate>2015-08-15 09:00:00.0</startDate>
+                                <endDate>2015-08-15 10:20:00.0</endDate>
+                                <csa>1</csa>
+                                <cba>0</cba>
+                        </round>
+                </rounds>
+                <groups>
+                        <group>
+                                <name>Karlar -24</name>
+                                <tees>Gulir </tees>
+                                <gender>M</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>36.0</handicapMax>
+                                <ageMin>0</ageMin>
+                                <ageMax>100</ageMax>
+                        </group>
+                        <group>
+                                <name>Konur -28</name>
+                                <tees>Rauðir kvenna</tees>
+                                <gender>F</gender>
+                                <handicapMin>-10.0</handicapMin>
+                                <handicapMax>40.0</handicapMax>
+                                <ageMin>0</ageMin>
+                                <ageMax>100</ageMax>
+                        </group>
+                </groups>
+        </tournament>
+</tournaments>

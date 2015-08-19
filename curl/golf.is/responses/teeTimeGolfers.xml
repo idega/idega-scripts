@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<players>
+        <player>
+                <id>25440</id>
+                <time>2015-06-15 08:00:00</time>
+                <personalID>**********</personalID>
+                <name>Þorvarður Gunnarsson</name>
+                <club>GKG</club>
+                <handicap>30.9</handicap>
+                <group>10</group>
+                <registeredBy>Þorvarður Gunnarsson</registeredBy>
+        </player>
+        <player>
+                <id>25441</id>
+                <time>2015-06-15 08:00:00</time>
+                <personalID>**********</personalID>
+                <name>Þórlaug Ragnarsdóttir</name>
+                <club>GKG</club>
+                <handicap>33.7</handicap>
+                <group>10</group>
+                <registeredBy>Þorvarður Gunnarsson</registeredBy>
+        </player>
+</players>

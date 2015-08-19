@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<standingss>
+        <standings>
+                <groupName>Karlar, opin mot</groupName>
+                <scores>
+                        <score>
+                                <position>1</position>
+                                <name>Kristján Þór Einarsson</name>
+                                <personalID>**********</personalID>
+                                <club>GM</club>
+                                <rounds>68</rounds>
+                                <difference>-4</difference>
+                                <totalDifference>-4</totalDifference>
+                                <playedHoles>F</playedHoles>
+                        </score>
+                </scores>
+        </standings>
+        <standings>
+                <groupName>Konur, opin mot</groupName>
+                <scores>
+                        <score>
+                                <position>1</position>
+                                <name>Hanna Þrúður Ólafsdóttir</name>
+                                <personalID>**********</personalID>
+                                <club>GM</club>
+                                <rounds>95</rounds>
+                                <difference>23</difference>
+                                <totalDifference>23</totalDifference>
+                                <playedHoles>F</playedHoles>
+                        </score>
+                </scores>
+        </standings>
+</standingss>

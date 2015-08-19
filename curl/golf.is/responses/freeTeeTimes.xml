@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<teeTimes>
+        <teeTime>
+                <groupNumber>47</groupNumber>
+                <time>2015-08-18T14:10:00Z</time>
+                <freeSlots>3</freeSlots>
+                <golfers>
+                        <golfer>
+                                <id>119792</id>
+                                <personalID>**********</personalID>
+                                <name>Sigurður Arnar Garðarsson</name>
+                                <club>GKG</club>
+                                <handicap>4.3</handicap>
+                                <group>47</group>
+                                <registeredBy>Sigurður Arnar Garðarsson</registeredBy>
+                        </golfer>
+                </golfers>
+        </teeTime>
+</teeTimes>

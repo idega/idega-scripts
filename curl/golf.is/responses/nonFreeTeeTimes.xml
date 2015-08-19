@@ -1,0 +1,52 @@
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<teeTimes>
+        <teeTime>
+                <groupNumber>1</groupNumber>
+                <time>2015-06-15T06:30:00Z</time>
+                <freeSlots>3</freeSlots>
+                <golfers>
+                        <golfer>
+                                <id>18374</id>
+                                <personalID>**********</personalID>
+                                <name>Einar Þór Bjarnason</name>
+                                <club>GKG</club>
+                                <handicap>20.4</handicap>
+                                <group>1</group>
+                                <registeredBy>Einar Þór Bjarnason</registeredBy>
+                        </golfer>
+                </golfers>
+        </teeTime>
+        <teeTime>
+                <groupNumber>10</groupNumber>
+                <time>2015-06-15T08:00:00Z</time>
+                <freeSlots>2</freeSlots>
+                <golfers>
+                        <golfer>
+                                <id>25440</id>
+                                <personalID>**********</personalID>
+                                <name>Þorvarður Gunnarsson</name>
+                                <club>GKG</club>
+                                <handicap>30.9</handicap>
+                                <group>10</group>
+                                <registeredBy>Þorvarður Gunnarsson</registeredBy>
+                        </golfer>
+                        <golfer>
+                                <id>25441</id>
+                                <personalID>**********</personalID>
+                                <name>Þórlaug Ragnarsdóttir</name>
+                                <club>GKG</club>
+                                <handicap>33.7</handicap>
+                                <group>10</group>
+                                <registeredBy>Þorvarður Gunnarsson</registeredBy>
+                        </golfer>
+                </golfers>
+        </teeTime>
+        <teeTime>
+                <groupNumber>28</groupNumber>
+                <time>2015-06-15T11:00:00Z</time>
+                <freeSlots>0</freeSlots>
+                <tournament>Punktamót GKG 2. hringur (fyrir hádegi)</tournament>
+                <golfers />
+        </teeTime>
+</teeTimes>

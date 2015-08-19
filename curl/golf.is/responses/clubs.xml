@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<clubs>
+        <club>
+                <id>84</id>
+                <abbreviation>GKG</abbreviation>
+                <name>Golfkl. Kópavogs/Garðabæjar</name>
+                <address>V/vífilstaðaveg</address>
+                <postalCode>210 Garðabær</postalCode>
+                <email>gkg@gkg.is</email>
+                <phone>565 7373</phone>
+                <webpage>www.gkg.is</webpage>
+                <latitude>64.08427</latitude>
+                <longitude>-21.88276</longitude>
+                <foundedYear>1994</foundedYear>
+                <onlineStartingtime>false</onlineStartingtime>
+        </club>
+</clubs>

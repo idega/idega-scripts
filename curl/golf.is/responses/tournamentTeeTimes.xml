@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tournamentTeeTimesOverviews>
+  <tournamentTeeTimesOverview>
+    <roundName>Hringur 1</roundName>
+    <roundNumber>1</roundNumber>
+    <teeTimes>
+      <club>GBO</club>
+      <handicap>6.3</handicap>
+      <playTime>1.5.2015 16:00</playTime>
+      <player>Gunnar Már Elíasson            </player>
+    </teeTimes>
+  </tournamentTeeTimesOverview>
+</tournamentTeeTimesOverviews>

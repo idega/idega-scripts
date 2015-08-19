@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<players>
+        <player>
+                <id>3902</id>
+                <time>11:50</time>
+                <personalID>**********</personalID>
+                <name>Gunnar Páll Þórisson</name>
+                <club>GKG</club>
+                <handicap>4.4</handicap>
+                <group>33</group>
+                <registeredBy>Gunnar Páll Þórisson</registeredBy>
+        </player>
+        <player>
+                <id>22284</id>
+                <time>11:50</time>
+                <personalID>**********</personalID>
+                <name>Svanhvít J Guðbjartsdóttir</name>
+                <club>GKG</club>
+                <handicap>35.1</handicap>
+                <group>33</group>
+                <registeredBy>Gunnar Páll Þórisson</registeredBy>
+        </player>
+        <player>
+                <id>26595</id>
+                <time>11:50</time>
+                <personalID>**********</personalID>
+                <name>Halldór Ragnar Halldórsson</name>
+                <club>GKG</club>
+                <handicap>11.9</handicap>
+                <group>33</group>
+                <registeredBy>Halldór Ragnar Halldórsson</registeredBy>
+        </player>
+        <player>
+                <id>14878</id>
+                <time>11:50</time>
+                <personalID>**********</personalID>
+                <name>Kristján F Guðjónsson</name>
+                <club>GKG</club>
+                <handicap>15.7</handicap>
+                <group>33</group>
+                <registeredBy>Kristján F Guðjónsson</registeredBy>
+        </player>
+</players>

@@ -10,4 +10,5 @@ printf '\n'
 curl --insecure \
     --include \
     --request GET \
-    http://www.golf.is/rest/areas
+    --header "Accept: application/json" \
+    http://www.golf.is/rest/areas >> areas.json

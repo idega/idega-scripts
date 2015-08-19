@@ -11,4 +11,4 @@ curl --insecure \
     --include \
     --request GET \
     --header "Accept: application/json" \
-    http://www.golf.is/rest/golferSearch/?personalID=2903612499;
+    http://www.golf.is/rest/golferSearch/?personalID=2903612499 > member.json

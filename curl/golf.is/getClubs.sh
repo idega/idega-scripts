@@ -10,4 +10,5 @@ printf '\n'
 curl --insecure \
     --include \
     --request GET \
-    "http://www.golf.is/rest/clubs?personalID=2903612499&abbreviation=gkg"
+    --header "Accept: application/json" \
+    "http://www.golf.is/rest/clubs?personalID=2903612499&abbreviation=gkg" > clubs.json

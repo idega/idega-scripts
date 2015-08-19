@@ -10,4 +10,5 @@ printf '\n'
 curl --insecure \
     --include \
     --request GET \
-    "http://www.golf.is/api/fields?personalID=2903612499&holes=18&name=dalu&unionID=84"
+    --header "Accept: application/json" \
+    "http://www.golf.is/api/fields?personalID=2903612499&holes=18&name=dalu&unionID=84" > fields.json

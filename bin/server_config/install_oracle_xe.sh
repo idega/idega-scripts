@@ -22,7 +22,7 @@ if [ ! -d "$BIN_FOLDER" ]; then
 fi
 
 if command -v s3cmd > /dev/null; then
-    s3cmd get s3://idega-default/bin/oracle-xe-11.2.0-1.0.x86_64.rpm.zip "$BIN_FOLDER/";
+    s3cmd get s3://idega-backup/bin/oracle-xe-11.2.0-1.0.x86_64.rpm.zip "$BIN_FOLDER/";
 
     if ! command -v unzip > /dev/null; then
         echo -e "Command 'unzip' not found, installing...\n"; 

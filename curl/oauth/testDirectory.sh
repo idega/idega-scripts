@@ -12,4 +12,4 @@ curl \
 	--include \
 	--request GET \
 	--header "Accept: application/json" \
-	"http://localhost:8082/api/test/?access_token=522620b3-b0d5-4ad5-a543-33037945bbc1"
+	"http://localhost:8082/token/test?access_token=522620b3-b0d5-4ad5-a543-33037945bbc1"

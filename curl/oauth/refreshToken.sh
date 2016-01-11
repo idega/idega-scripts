@@ -12,4 +12,4 @@ curl \
         --include \
         --request POST \
         --header "Accept: application/json" \
-        "http://localhost:8082/authentication/oauth/token?grant_type=refresh_token&client_id=restapp&client_secret=restapp&refresh_token=7b9422d0-92ae-4933-a4a8-4168be9241dc"
+        "http://localhost:8082/authentication/oauth/token?grant_type=refresh_token&client_id=APP_ID&client_secret=APP_SECRET&refresh_token=7b9422d0-92ae-4933-a4a8-4168be9241dc"

@@ -12,4 +12,4 @@ curl \
 	--include \
 	--request POST \
 	--header "Accept: application/json" \
-	"http://localhost:8080/oauth/token?grant_type=password&client_id=restapp&client_secret=restapp&username=Administrator&password=idega"
+	"http://localhost:8082/authentication/oauth/token?grant_type=password&client_id=restapp&client_secret=restapp&username=Administrator&password=idega"

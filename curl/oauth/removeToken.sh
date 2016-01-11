@@ -12,4 +12,4 @@ curl \
 	--include \
 	--request DELETE \
 	--header "Accept: application/json" \
-	"http://localhost:8080/token/management?access_token=cdb47deb-ead5-4400-aab4-37de102333fa"
+	"http://localhost:8082/token/management?access_token=522620b3-b0d5-4ad5-a543-33037945bbc1"

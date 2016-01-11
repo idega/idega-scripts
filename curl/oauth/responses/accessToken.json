@@ -1,0 +1,7 @@
+{
+	"access_token":"73b4769d-fcd2-4a30-a5ec-ad86ea0df0e6",
+	"token_type":"bearer",
+	"refresh_token":"7b9422d0-92ae-4933-a4a8-4168be9241dc",
+	"expires_in":86399,
+	"scope":"read write trust"
+}

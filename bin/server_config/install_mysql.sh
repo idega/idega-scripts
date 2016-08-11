@@ -7,7 +7,7 @@ echo "#########################################################################"
 echo "\n"
 
 echo "# Installing mysql repository..."
-s3cmd get s3://idega-backup/rpm/mysql-community-release-el7-5.noarch.rpm
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
 sudo rpm -Uvh mysql-community-release-el7-5.noarch.rpm
 rm -f mysql-community-release-el7-5.noarch.rpm
 

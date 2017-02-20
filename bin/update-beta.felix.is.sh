@@ -44,9 +44,9 @@ echo 'Waiting for '$DOMAIN' to startup...';
 sleep 1800;
 
 echo 'Restoring '$DOMAIN' configuration to NGINX...';
-ssh $BETA_SERVER_LOGIN 'sudo mv /etc/nginx/conf.d/upstream.'$DOMAIN'.conf /etc/nginx/conf.d/upstream.'$DOMAIN'.conf.off';
-ssh $BETA_SERVER_LOGIN "sudo mv /etc/nginx/conf.d/upstream.conf.off /etc/nginx/conf.d/upstream.conf";
-ssh $BETA_SERVER_LOGIN $NGINX_RESTART_QUERY;
+ssh -t $BETA_SERVER_LOGIN 'sudo mv /etc/nginx/conf.d/upstream.'$DOMAIN'.conf /etc/nginx/conf.d/upstream.'$DOMAIN'.conf.off';
+ssh -t $BETA_SERVER_LOGIN "sudo mv /etc/nginx/conf.d/upstream.conf.off /etc/nginx/conf.d/upstream.conf";
+ssh -t $BETA_SERVER_LOGIN $NGINX_RESTART_QUERY;
 # echo $BETA_SERVER_LOGIN 'sudo mv /etc/nginx/conf.d/upstream.'$DOMAIN'.conf /etc/nginx/conf.d/upstream.'$DOMAIN'.conf.off';
 # echo $BETA_SERVER_LOGIN "sudo mv /etc/nginx/conf.d/upstream.conf.off /etc/nginx/conf.d/upstream.conf";
 # echo $BETA_SERVER_LOGIN $NGINX_RESTART_QUERY;

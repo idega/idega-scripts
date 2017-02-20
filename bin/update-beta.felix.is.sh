@@ -1,5 +1,11 @@
 #/bin/sh
 
+echo "###############################################################\n"
+echo "# A script to update WAR of production server                 #\n"
+echo "# By Martynas Stakė (martynas@idega.is) 2017                  #\n"
+echo "###############################################################\n"
+echo "\n"
+
 BETA_SERVER_LOGIN="idegaweb@10.160.50.20";
 DOMAIN_BETA="beta.felix.is";
 

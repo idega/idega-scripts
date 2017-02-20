@@ -35,13 +35,14 @@ scp $BETA_SERVER_LOGIN:/home/idegaweb/ROOTNEW.zip ${DOMAINS[$DOMAIN]}:/home/ideg
 echo 'Shutting down '$DOMAIN'...';
 ssh ${DOMAINS[$DOMAIN]} '/home/idegaweb/tomcat/'$DOMAIN'/bin/./shutdown.sh';
 # echo ${DOMAINS[$DOMAIN]} '/home/idegaweb/tomcat/'$DOMAIN'/bin/./shutdown.sh';
+sleep 30;
 
 echo 'Updating '$DOMAIN'...';
-ssh ${DOMAINS[$DOMAIN]} '/home/idegaweb/tomcat/'$DOMAIN'/wars/update.sh';
+ssh -t ${DOMAINS[$DOMAIN]} '/home/idegaweb/tomcat/'$DOMAIN'/wars/update.sh';
 # echo ${DOMAINS[$DOMAIN]} '/home/idegaweb/tomcat/'$DOMAIN'/wars/update.sh';
 
 echo 'Waiting for '$DOMAIN' to startup...';
-sleep 1800;
+sleep 900;
 
 echo 'Restoring '$DOMAIN' configuration to NGINX...';
 ssh -t $BETA_SERVER_LOGIN 'sudo mv /etc/nginx/conf.d/upstream.'$DOMAIN'.conf /etc/nginx/conf.d/upstream.'$DOMAIN'.conf.off';

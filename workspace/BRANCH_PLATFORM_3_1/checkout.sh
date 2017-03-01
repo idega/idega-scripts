@@ -42,12 +42,12 @@ path=(
 	org.apache.myfaces
 )
 
-mkdir -p $HOME/BRANCH_PLATFORM_3_1/
+mkdir -p $HOME/BRANCH_PLATFORM_3_1/modules;
 git clone -b BRANCH_PLATFORM_3_1 git@github.com:idega/etravel $HOME/BRANCH_PLATFORM_3_1/etravel
 git clone -b BRANCH_PLATFORM_3_1 https://github.com/idega/eplatform.git $HOME/BRANCH_PLATFORM_3_1/eplatform
 for (( i = 0 ; i < ${#path[@]} ; i++ )) do
 	echo "---------------------------------"
 	echo ${path[$i]}
 	echo "---------------------------------"
-	git clone -b BRANCH_PLATFORM_3_1 git@github.com:idega/${path[$i]} $HOME/BRANCH_PLATFORM_3_1/${path[$i]}
+	git clone -b BRANCH_PLATFORM_3_1 git@github.com:idega/${path[$i]} $HOME/BRANCH_PLATFORM_3_1/modules/${path[$i]}
 done

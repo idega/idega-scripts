@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor 
+	license agreements. See the NOTICE file distributed with this work for additional 
+	information regarding copyright ownership. The ASF licenses this file to You under 
+	the Apache License, Version 2.0 (the "License"); you may not use this file except 
+	in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
+	Unless required by applicable law or agreed to in writing, software distributed under 
+	the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS 
+	OF ANY KIND, either express or implied. See the License for the specific language 
+	governing permissions and limitations under the License. --><!-- Note: A "Server" is not itself a "Container", so you may not define subcomponents 
+	such as "Valves" at this level. Documentation at /docs/config/server.html -->
+<Server
+	port="8005"
+	shutdown="SHUTDOWN">
+	<Listener className="org.apache.catalina.startup.VersionLoggerListener" />
+	<!-- Security listener. Documentation at /docs/config/listeners.html <Listener className="org.apache.catalina.security.SecurityListener" 
+		/> -->
+	<!--APR library loader. Documentation at /docs/apr.html -->
+	<Listener
+		SSLEngine="on"
+		className="org.apache.catalina.core.AprLifecycleListener" />
+	<!--Initialize Jasper prior to webapps are loaded. Documentation at /docs/jasper-howto.html -->
+	<Listener className="org.apache.catalina.core.JasperListener" />
+	<!-- Prevent memory leaks due to use of particular java/javax APIs -->
+	<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+	<Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+	<Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+	<!-- Global JNDI resources Documentation at /docs/jndi-resources-howto.html -->
+	<GlobalNamingResources>
+		<!-- Editable user database that can also be used by UserDatabaseRealm to authenticate 
+			users -->
+		<Resource
+			auth="Container"
+			description="User database that can be updated and saved"
+			factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
+			name="UserDatabase"
+			pathname="conf/tomcat-users.xml"
+			type="org.apache.catalina.UserDatabase" />
+	</GlobalNamingResources>
+
+	<!-- A "Service" is a collection of one or more "Connectors" that share a single 
+		"Container" Note: A "Service" is not itself a "Container", so you may not define 
+		subcomponents such as "Valves" at this level. Documentation at /docs/config/service.html -->
+	<Service name="Catalina">
+
+		<!-- A "Connector" represents an endpoint by which requests are received and responses 
+			are returned. Documentation at : Java HTTP Connector: /docs/config/http.html (blocking 
+			& non-blocking) Java AJP Connector: /docs/config/ajp.html APR (HTTP/AJP) Connector: 
+			/docs/apr.html Define a non-SSL HTTP/1.1 Connector on port 8080 -->
+
+		<!-- ===================== acceptorThreadCount ===================== -->
+		<!-- The number of threads to be used to accept connections. Increase this value 
+			on a multi CPU machine, although you would never really need more than 2. Also, with 
+			a lot of non keep alive connections, you might want to increase this value as well. 
+			Default value is 1. -->
+
+		<!-- ====================== connectionTimeout ====================== -->
+		<!-- The number of milliseconds this Connector will wait, after accepting a connection, 
+			for the request URI line to be presented. Use a value of -1 to indicate no (i.e. 
+			infinite) timeout. The default value is 60000 (i.e. 60 seconds) but note that the 
+			standard server.xml that ships with Tomcat sets this to 20000 (i.e. 20 seconds). 
+			Unless disableUploadTimeout is set to false, this timeout will also be used when 
+			reading the request body (if any). -->
+
+		<!-- ====================== keepAliveTimeout ======================= -->
+		<!-- The number of milliseconds this Connector will wait for another HTTP request 
+			before closing the connection. The default value is to use the value that has been 
+			set for the connectionTimeout attribute. Use a value of -1 to indicate no (i.e. infinite) 
+			timeout. -->
+
+		<!-- ======================= maxConnections ======================== -->
+		<!-- The maximum number of connections that the server will accept and process 
+			at any given time. When this number has been reached, the server will accept, but 
+			not process, one further connection. This additional connection be blocked until 
+			the number of connections being processed falls below maxConnections at which point 
+			the server will start accepting and processing new connections again. Note that once 
+			the limit has been reached, the operating system may still accept connections based 
+			on the acceptCount setting. The default value varies by connector type. For BIO the 
+			default is the value of maxThreads unless an Executor is used in which case the default 
+			will be the value of maxThreads from the executor. For NIO the default is 10000. 
+			For APR/native, the default is 8192. Note that for APR/native on Windows, the configured 
+			value will be reduced to the highest multiple of 1024 that is less than or equal 
+			to maxConnections. This is done for performance reasons. If set to a value of -1, 
+			the maxConnections feature is disabled and connections are not counted. -->
+
+		<!-- ======================= maxCookieCount ======================== -->
+		<!-- The maximum number of cookies that are permitted for a request. A value of 
+			less than zero means no limit. If not specified, a default value of 200 will be used. -->
+
+		<!-- ======================== maxThreads =========================== -->
+		<!-- The maximum number of request processing threads to be created by this Connector, 
+			which therefore determines the maximum number of simultaneous requests that can be 
+			handled. If not specified, this attribute is set to 200. If an executor is associated 
+			with this connector, this attribute is ignored as the connector will execute tasks 
+			using the executor rather than an internal thread pool. Note that if an executor 
+			is configured any value set for this attribute will be recorded correctly but it 
+			will be reported (e.g. via JMX) as -1 to make clear that it is not used. -->
+
+		<!-- ====================== minSpareThreads ======================== -->
+		<!-- The minimum number of threads always kept running. If not specified, the default 
+			of 10 is used. If an executor is associated with this connector, this attribute is 
+			ignored as the connector will execute tasks using the executor rather than an internal 
+			thread pool. Note that if an executor is configured any value set for this attribute 
+			will be recorded correctly but it will be reported (e.g. via JMX) as -1 to make clear 
+			that it is not used. -->
+
+		<!-- ====================== processorCache ========================= -->
+		<!-- The protocol handler caches Processor objects to speed up performance. This 
+			setting dictates how many of these objects get cached. -1 means unlimited, default 
+			is 200. If not using Servlet 3.0 asynchronous processing, a good default is to use 
+			the same as the maxThreads setting. If using Servlet 3.0 asynchronous processing, 
+			a good default is to use the larger of maxThreads and the maximum number of expected 
+			concurrent requests (synchronous and asynchronous). -->
+
+		<Connector
+			acceptorThreadCount="2"
+			connectionTimeout="60000"
+			keepAliveTimeout="60000"
+			maxConnections="-1"
+			maxCookieCount="-1"
+			maxThreads="800"
+			minSpareThreads="100"
+			processorCache="800"
+			port="8082"
+			protocol="org.apache.coyote.http11.Http11NioProtocol"
+			redirectPort="8443" />
+
+		<!-- An Engine represents the entry point (within Catalina) that processes every 
+			request. The Engine implementation for Tomcat stand alone analyzes the HTTP headers 
+			included with the request, and passes them on to the appropriate Host (virtual host). 
+			Documentation at /docs/config/engine.html -->
+
+		<!-- You should set jvmRoute to support load-balancing via AJP ie : <Engine name="Catalina" 
+			defaultHost="localhost" jvmRoute="jvm1"> -->
+		<Engine
+			defaultHost="localhost"
+			name="Catalina">
+
+			<!--For clustering, please take a look at documentation at: /docs/cluster-howto.html 
+				(simple how to) /docs/config/cluster.html (reference documentation) -->
+			<!-- <Cluster className="org.apache.catalina.ha.tcp.SimpleTcpCluster"/> -->
+
+			<!-- Use the LockOutRealm to prevent attempts to guess user passwords via a brute-force 
+				attack -->
+			<Realm className="org.apache.catalina.realm.LockOutRealm">
+				<!-- This Realm uses the UserDatabase configured in the global JNDI resources 
+					under the key "UserDatabase". Any edits that are performed against this UserDatabase 
+					are immediately available for use by the Realm. -->
+				<Realm
+					className="org.apache.catalina.realm.UserDatabaseRealm"
+					resourceName="UserDatabase" />
+			</Realm>
+
+			<Host
+				appBase="webapps"
+				autoDeploy="true"
+				name="localhost"
+				unpackWARs="true">
+
+				<!-- SingleSignOn valve, share authentication between web applications Documentation 
+					at: /docs/config/valve.html -->
+				<!-- <Valve className="org.apache.catalina.authenticator.SingleSignOn" /> -->
+
+				<!-- Access log processes all example. Documentation at: /docs/config/valve.html 
+					Note: The pattern used is equivalent to using pattern="common" -->
+				<Valve
+					className="org.apache.catalina.valves.AccessLogValve"
+					directory="logs"
+					pattern="%h %l %u %t &quot;%r&quot; %s %b"
+					prefix="localhost_access_log."
+					suffix=".txt" />
+
+			</Host>
+		</Engine>
+	</Service>
+</Server>

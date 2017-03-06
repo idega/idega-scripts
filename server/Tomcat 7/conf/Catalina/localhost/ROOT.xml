@@ -177,9 +177,9 @@
 		
 		autoCommitOnClose="true"
 		
-		user="felix"
-		password="f3l1x"
-		jdbcUrl="jdbc:mysql://10.160.50.23:3306/production_felix?autoReconnect=true"
+		user="idega"
+		password="idega"
+		jdbcUrl="jdbc:mysql://10.160.50.23:3306/idega?autoReconnect=true"
 		driverClass="com.mysql.jdbc.Driver"
 		factory="org.apache.naming.factory.BeanFactory"/>
 </Context>

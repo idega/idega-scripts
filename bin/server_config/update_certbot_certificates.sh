@@ -8,7 +8,7 @@ echo "\n"
 
 DIFFIE_HELLMAN_FILE="/etc/ssl/certs/dhparam.pem"
 SIGNING_REQUEST_FOLDER="/etc/pki/tls/csr/"
-DOMAINS=( bodylounge.idega.is munizapp.com partshidden.com vbv.sidan.is vso.sidan.is )
+DOMAINS=( idega.is )
 
 echo "Installing OpenSSL if does not exist..."
 sudo yum -y install openssl

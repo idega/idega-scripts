@@ -16,7 +16,7 @@ REPOSITORY_PATH="$HOME/tomcat/$DOMAIN_NAME";
 
 FORMATTED_DATE=$(date +%Y-%m-%d);
 
-BUCKET_PATH="s3://idega-default/backup/$DOMAIN_NAME/$FORMATTED_DATE/";
+BUCKET_PATH="s3://idega-backup/backup/$DOMAIN_NAME/$FORMATTED_DATE/";
 
 BACKUP_FOLDER="$HOME/backup/";
 DOMAIN_BACKUP_FOLDER="$BACKUP_FOLDER$DOMAIN_NAME/";
@@ -86,7 +86,7 @@ fi
 
 OLD_FORMATTED_DATE=$(date +%Y-%m-%d -d "7 days ago");
 OLD_FOLDER_NAME="$DOMAIN_BACKUP_FOLDER$OLD_FORMATTED_DATE";
-OLD_BUCKET_PATH="s3://idega-default/backup/$DOMAIN_NAME/$OLD_FORMATTED_DATE/";
+OLD_BUCKET_PATH="s3://idega-backup/backup/$DOMAIN_NAME/$OLD_FORMATTED_DATE/";
 
 if [ -d "$OLD_FOLDER_NAME" ]; then
 	echo "Removing directory: $OLD_FOLDER_NAME";

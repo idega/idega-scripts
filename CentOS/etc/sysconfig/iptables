@@ -1,0 +1,62 @@
+# Firewall configuration written by system-config-firewall
+# Manual customization of this file is not recommended.
+*filter
+:INPUT		ACCEPT [0:0]
+:FORWARD	ACCEPT [0:0]
+:OUTPUT		ACCEPT [0:0]
+
+# Implementations of the Internet Protocol Suite include 
+# a virtual network interface through which network applications 
+# can communicate when executing on the same machine. 
+# It is implemented entirely within the operating system's networking 
+# software and passes no packets to any network interface controller. 
+# Any traffic that a computer program sends to a loopback IP address 
+# is simply and immediately passed back up the network software stack 
+# as if it had been received from another device.
+-A INPUT	-j ACCEPT	-i lo
+
+# The Internet Control Message Protocol (ICMP) 
+# is a supporting protocol in the Internet protocol suite. 
+# It is used by network devices, like routers, 
+# to send error messages and operational information indicating, 
+# for example, that a requested service is not available or 
+# that a host or router could not be reached.
+-A INPUT	-j ACCEPT	-p icmp
+
+# All existing connections are allowed
+-A INPUT	-j ACCEPT	-m state	--state ESTABLISHED,RELATED
+
+# All new connections are allowed to:
+
+# The File Transfer Protocol (FTP) is a standard network protocol 
+# used for the transfer of computer files from a server to a client 
+# using the Client–server model on a computer network.
+-A INPUT	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 20:21
+
+# Secure Shell (SSH) is a cryptographic network protocol for operating 
+# network services securely over an unsecured network. 
+# The best known example application is for remote login to computer systems by users.
+-A INPUT	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 22
+
+# The Hypertext Transfer Protocol (HTTP) is an application protocol for distributed, 
+# collaborative, and hypermedia information systems. 
+# HTTP is the foundation of data communication for the World Wide Web.
+-A INPUT	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 80
+
+# Network Time Protocol (NTP) is a networking protocol for 
+# clock synchronization between computer systems over packet-switched, 
+# variable-latency data networks.
+-A INPUT	-j ACCEPT	-m state	--state NEW	-m udp	-p udp --dport 123
+
+# HTTPS (also called HTTP over TLS, HTTP over SSL, and HTTP Secure) 
+# is a protocol for secure communication over a computer network which 
+# is widely used on the Internet.
+-A INPUT 	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 443
+
+# FTP passive mode stuff
+# -A INPUT 	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 1024:
+
+# All remaning connections are rejected
+-A INPUT	-j REJECT	--reject-with icmp-host-prohibited
+-A FORWARD	-j REJECT	--reject-with icmp-host-prohibited
+COMMIT

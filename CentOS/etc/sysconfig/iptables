@@ -54,7 +54,7 @@
 -A INPUT 	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 443
 
 # FTP passive mode stuff
-# -A INPUT 	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --dport 1024:
+-A INPUT 	-j ACCEPT	-m state	--state NEW	-m tcp	-p tcp --source 82.221.24.30 --dport 1024:
 
 # All remaning connections are rejected
 -A INPUT	-j REJECT	--reject-with icmp-host-prohibited

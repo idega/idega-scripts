@@ -13,6 +13,8 @@ DATABASE_DUMP_FILE_NAME="$MYSQL_DATABASE_NAME-UTF8-$FORMATTED_DATE.sql.gz";
 DATABASE_DATA_DUMP_FILE_PATH="$FOLDER_NAME/data-$DATABASE_DUMP_FILE_NAME";
 DATABASE_TABLES_DUMP_FILE_PATH="$FOLDER_NAME/tables-$DATABASE_DUMP_FILE_NAME";
 
+mkdir -p $FOLDER_NAME;
+
 mysqldump \
                  -u $MYSQL_DATABASE_USERNAME \
                  -h localhost \
@@ -22,7 +24,6 @@ mysqldump \
                  --skip-add-drop-table \
                  --skip-add-locks \
                  --skip-comments \
-                 --skip-extended-insert \
                  --skip-triggers \
                  --no-create-db \
                  --replace \
@@ -38,9 +39,11 @@ mysqldump \
                 --skip-add-drop-table \
                 --skip-add-locks \
                 --skip-comments \
-                --skip-extended-insert \
                 --skip-triggers \
+                --extended-insert \
+                --complete-insert \
                 --no-create-db \
                 --replace \
+                --no-create-info \
                 --no-create-info \
                 --single-transaction $MYSQL_DATABASE_NAME | gzip -9 > $DATABASE_DATA_DUMP_FILE_PATH;

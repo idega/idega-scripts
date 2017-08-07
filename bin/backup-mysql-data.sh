@@ -45,5 +45,4 @@ mysqldump \
                 --no-create-db \
                 --replace \
                 --no-create-info \
-                --no-create-info \
                 --single-transaction $MYSQL_DATABASE_NAME | gzip -9 > $DATABASE_DATA_DUMP_FILE_PATH;

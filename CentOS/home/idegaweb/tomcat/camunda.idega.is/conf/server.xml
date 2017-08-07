@@ -45,7 +45,7 @@
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
 
-    <!-- 
+    <!--
          Camunda databse configuration
     -->
     <Resource name="jdbc/ProcessEngine"
@@ -65,11 +65,33 @@
               type="org.camunda.bpm.ProcessEngineService"
               description="camunda BPM platform Process Engine Service"
               factory="org.camunda.bpm.container.impl.jndi.ProcessEngineServiceObjectFactory" />
-              
+
     <Resource name="global/camunda-bpm-platform/process-engine/ProcessApplicationService!org.camunda.bpm.ProcessApplicationService" auth="Container"
               type="org.camunda.bpm.ProcessApplicationService"
               description="camunda BPM platform Process Application Service"
               factory="org.camunda.bpm.container.impl.jndi.ProcessApplicationServiceObjectFactory" />
+
+	<!-- JOTM -->
+	<!-- <Resource name="jdbc/JOTM"
+		auth="Container"
+		type="javax.sql.DataSource" 
+		factory="org.objectweb.jotm.datasource.DataSourceFactory"
+		uniqueResourceName="jotm"
+		driverClassName="com.mysql.jdbc.Driver" 
+		url="jdbc:mysql://localhost:3306/camunda"
+		defaultTransactionIsolation="READ_COMMITTED"
+		username="camunda"  
+		password="password"
+		maxActive="20"
+		minIdle="5" /> -->
+	
+	<!-- Description of the resource "UserTransaction -->
+	<!-- <Resource 
+		name="comp/UserTransaction" 
+		auth="Container" 
+		type="javax.transaction.UserTransaction"
+		factory="org.objectweb.jotm.UserTransactionFactory" 
+		jotm.timeout="60"/> -->
 
   </GlobalNamingResources>
 

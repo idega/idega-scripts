@@ -1,0 +1,2 @@
+#!/bin/sh
+openssl req -newkey rsa:2048 -nodes -sha256 -keyout flen.idega.is.key -out flen.idega.is.csr -subj '/C=IS/ST=Reykjavik/L=Reykjavik/O=IOS hugbúnarður ehf./O=IOS hugbúnarður ehf. Vilnius/CN=flen.idega.is/emailAddress=programmers@idega.com/serialNumber=5001070730'

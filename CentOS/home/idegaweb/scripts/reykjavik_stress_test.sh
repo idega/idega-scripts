@@ -5,6 +5,9 @@ do
 	time curl -O -s "https://rafraen.reykjavik.is/pages?[1-1000]" &
 	pidlist="$pidlist $!"
 
+	time curl -O -s "https://rafraen.reykjavik.is/pages/?l_by_uuid=a8e95706-3d10-4038-8359-adabdb8bb470&login_state=login&[1-1000]" &
+	pidlist="$pidlist $!"
+
 	time curl -O -s "https://rafraen.reykjavik.is/pages/hlutverk?[1-1000]" &
 	pidlist="$pidlist $!"
 
@@ -21,6 +24,9 @@ do
 	pidlist="$pidlist $!"
 
 	time curl -O -s "https://rafraen.reykjavik.is/pages/umsoknir/?[1-1000]" &
+	pidlist="$pidlist $!"
+
+	time curl -O -s "https://rafraen.reykjavik.is/pages/?l_by_uuid=a8e95706-3d10-4038-8359-adabdb8bb470&login_state=logoff&[1-1000]" &
 	pidlist="$pidlist $!"
 done
 

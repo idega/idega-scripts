@@ -1,0 +1,93 @@
+# This group is only read by MariaDB servers, not by MySQL.
+# If you use the same .cnf file for MySQL and MariaDB,
+# you can put MariaDB-only options here
+[mariadb]
+
+#
+#    Description: If set to 0, the default unless the --general-log option is used, the general query log is disabled, while if set to 1, the general query log is enabled. See log_output for how log files are written. If that variable is set to NONE, no logs will be written even if general_query_log is set to 1.
+#    Commandline: --general-log
+#    Scope: Global
+#    Dynamic: Yes
+#    Data Type: boolean
+#    Default Value: 0
+#
+general_log=1
+
+#
+#    Description: Name of the general query log file. If this is not specified, the name is taken from the log-basename setting or from your system hostname with .log as a suffix.
+#    Commandline: --general-log-file=file_name
+#    Scope: Global
+#    Dynamic: Yes
+#    Data Type: file name
+#    Default Value: host_name.log
+#
+general_log_file=/var/log/mariadb/general.log
+
+#
+#    Description: If set to 0, the default unless the --slow-query-log option is used, the slow query log is disabled, while if set to 1 (both global and session variables), the slow query log is enabled. MariaDB 10.1 added support for session variables.
+#    Commandline: --slow-query-log
+#    Scope: Global, Session (MariaDB 10.1)
+#    Dynamic: Yes
+#    Data Type: boolean
+#    Default Value: 0
+#    See also: See log_output to see how log files are written. If that variable is set to NONE, no logs will be written even if slow_query_log is set to 1.
+#
+slow_query_log=1
+
+#
+#    Description: Name of the slow query log file.
+#    Commandline: --slow-query-log-file=file_name
+#    Scope: Global
+#    Dynamic: Yes
+#    Data Type: file name
+#    Default Value: host_name-slow.log
+#
+slow_query_log_file=/var/log/mariadb/slow.log
+
+#
+#    Description: Specifies the name of the error log. If --console is specified later in the configuration (Windows only) or this option isn't specified, errors will be logged to stderr. If no name is provided, errors will still be logged to hostname.err.
+#    Commandline: --log-error[=name]
+#    Scope: Global
+#    Dynamic: No
+#    Data Type: file name
+#    Default Value: (empty string)
+#
+log_error=/var/log/mariadb/error.log
+
+#
+#    Commandline: --plugin-load-add=name
+#    Description: Takes the same type of arguments that --plugin-load does and complements --plugin-load by appending its argument to the list specified by --plugin-load. So --plugin-load can be considered a composite option consisting of resetting the plugin load list and then calling --plugin-load-add to process the argument. Note that the order in which you specify --plugin-load and --plugin-load-add is important : "--plugin-load=x --plugin-load-add=y" will be equivalent to "--plugin-load=x,y" whereas "--plugin-load-add=y --plugin-load=x" will be equivalent to "plugin-load=x".
+#    Introduced: MariaDB 10.0.1
+#
+plugin-load-add=server_audit.so
+
+#
+#    Description: Enables/disables the logging. Expected values are ON/OFF. For example: SET GLOBAL server_audit_logging=on If the server_audit_output_type is FILE, this will actually create/open the logfile so the server_audit_file_path should be properly specified beforehand. Same about the SYSLOG-related parameters. The logging is turned off by default.
+#    Commandline: --server-audit-logging[={0|1}]
+#    Scope: Global
+#    Dynamic: Yes
+#    Data Type: boolean
+#    Default Value: OFF
+#
+server_audit_logging=ON
+
+#
+#    Description: When server_audit_output_type=file, sets the path and the filename to the log file. If the specified path exists as a directory, then the log will be created inside that directory with the name 'server_audit.log'. Otherwise the value is treated as a filename. The default value is 'server_audit.log', which means this file will be created in the database directory.
+#    Commandline: --server-audit-file-path=value
+#    Scope: Global
+#    Dynamic: Yes
+#    Data Type: string
+#    Default Value: server_audit.log
+#
+server_audit_file_path=/var/log/mariadb/
+
+#
+#    Description: If set it specifies the set of types of events to log. For example: SET GLOBAL server_audit_events='connect, query'
+#    Commandline: --server-audit-events=value
+#    Scope: Global
+#    Dynamic: Yes
+#    Data Type: string
+#    Default Value: Empty string
+#    Valid Values: CONNECT, QUERY and TABLE (QUERY_DDL, QUERY_DML added in 1.2.0 and QUERY_DCL added in 1.3.0)
+#
+server_audit_events = 'CONNECT,QUERY,TABLE'

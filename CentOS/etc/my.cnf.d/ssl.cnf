@@ -1,0 +1,41 @@
+# this is only for the mysqld standalone daemon
+[mysqld]
+
+#
+#    Description: Path to a PEM file containing list of trusted TLS certificate authorities. If this and ssl_capath are both unspecified, the client will not authenticate the server certificate. The server still verifies the client using any --ssl-ca and --ssl-capath values given to it at startup, or based on any requirements established from GRANT statements. Implies --ssl.
+#    Commandline: --ssl-ca=file_name
+#    Scope: Global
+#    Dynamic: No
+#    Data Type: file name
+#
+ssl_ca=/etc/pki/tls/certs/chain.pem
+
+#
+#    Description: Name of the TLS certificate file used to establish a secure TLS connection. Implies --ssl.
+#    Commandline: --ssl-cert=name
+#    Scope: Global
+#    Dynamic: No
+#    Data Type: file name
+#    Default Value: None
+#
+ssl_cert=/etc/pki/tls/certs/cert.pem
+
+#
+#    Description: The TLS key file used to establish a secure TLS connection. Implies --ssl.
+#    Commandline: --ssl-key=name
+#    Scope: Global
+#    Dynamic: No
+#    Data Type: string
+#    Default Value: None
+#
+ssl_key=/etc/pki/tls/private/privkey.pem
+
+#
+#    Description: List of permitted ciphers to use for TLS encryption. Implies --ssl. MariaDB (when compiled with OpenSSL) has supported the TLSv1.2 protocol since 10.0.15. Limit MariaDB to TLSv1.2 ciphers only with --ssl_cipher=TLSv1.2 and to SSLv3 ciphers with --ssl-cipher=SSLv3. TLS v1.2 is only available when MariaDB is compiled with OpenSSL. See have_openssl.
+#    Commandline: --ssl-cipher=name
+#    Scope: Global
+#    Dynamic: No
+#    Data Type: file name
+#    Default Value: None
+#
+ssl_cipher=TLSv1.2

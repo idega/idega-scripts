@@ -19,11 +19,11 @@ echo "# Installing web server devel packages..."
 sudo yum -y install httpd-devel
 
 echo "# Extracting modjk plugin..."
-wget http://mirrors.koehn.com/apache/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.41-src.tar.gz
-tar -xvf tomcat-connectors-1.2.41-src.tar.gz
+wget http://apache.mirror.serveriai.lt/tomcat/tomcat-connectors/jk/tomcat-connectors-1.2.43-src.tar.gz
+tar -xvf tomcat-connectors-1.2.43-src.tar.gz
 
 echo "# Configuring modjk plugin..."
-cd tomcat-connectors-1.2.41-src/native/
+cd tomcat-connectors-1.2.43-src/native/
 ./configure --with-apxs=/usr/bin/apxs --enable-api-compatibility
 sudo make
 sudo make install

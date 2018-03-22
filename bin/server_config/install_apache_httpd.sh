@@ -27,6 +27,7 @@ cd tomcat-connectors-1.2.43-src/native/
 ./configure --with-apxs=/usr/bin/apxs --enable-api-compatibility
 sudo make
 sudo make install
+sudo libtool --finish /usr/lib64/httpd/modules
 cd ../../
 
 echo "# Removing source files..."

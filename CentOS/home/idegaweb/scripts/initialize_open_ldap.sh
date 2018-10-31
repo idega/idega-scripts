@@ -8,6 +8,13 @@ sudo slappasswd
 sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/openldap/slapd.d/ldap.idega.is.ldif;
 
 #
+# Additional libs
+#
+sudo ldapadd -Y EXTERNAL -H ldapi:/// -f cosine.ldif;
+sudo ldapadd -Y EXTERNAL -H ldapi:/// -f inetorgperson.ldif;
+
+
+#
 # Setting directory configuration
 #
 sudo chown ldap:ldap /etc/openldap/slapd.d/base.ldif;

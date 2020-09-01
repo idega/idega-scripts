@@ -3,8 +3,8 @@
   <xccdf:benchmark href="/tmp/scap-workbench-sZLsZL/ssg-centos8-ds.xml"/>
   <xccdf:version time="2020-08-31T19:56:58">1</xccdf:version>
   <xccdf:Profile id="xccdf_scap-workbench_profile_default_rules">
-    <xccdf:title xml:lang="en-US">(default) [Restrictive]</xccdf:title>
-    <xccdf:description xml:lang="en-US">This profile doesn't inherit any other profile.</xccdf:description>
+    <xccdf:title xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="en-US">(default) [Restrictive]</xccdf:title>
+    <xccdf:description xmlns:xhtml="http://www.w3.org/1999/xhtml" xml:lang="en-US">This profile doesn't inherit any other profile.</xccdf:description>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_snmp_configure_server" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_disabling_dhcp_client" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_dhcp_server_configuration" selected="false"/>
@@ -15,7 +15,6 @@
     <xccdf:select idref="xccdf_org.ssgproject.content_group_mounting_remote_filesystems" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_certified-vendor" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_fips" selected="false"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_group_crypto" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_mcafee_hbss_software" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_mcafee_security_software" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_endpoint_security_software" selected="false"/>
@@ -405,14 +404,6 @@
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_package_aide_installed" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_aide_use_fips_hashes" selected="false"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_disable_prelink" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_dnf-automatic_security_updates_only" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_group_updating" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_package_dnf-automatic_installed" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_ensure_gpgcheck_never_disabled" selected="false"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_security_patches_up_to_date" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_timer_dnf-automatic_enabled" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_dnf-automatic_apply_updates" selected="true"/>
-    <xccdf:select idref="xccdf_org.ssgproject.content_rule_clean_components_post_updating" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_package_gdm_removed" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_gnome" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_group_log_rotation" selected="true"/>
@@ -1196,5 +1187,26 @@
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_file_owner_etc_group" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_file_owner_etc_shadow" selected="true"/>
     <xccdf:select idref="xccdf_org.ssgproject.content_rule_file_permissions_etc_shadow" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_group_crypto" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_configure_libreswan_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_configure_bind_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_configure_ssh_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_configure_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_configure_kerberos_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_harden_sshd_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_configure_openssl_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_harden_ssh_client_crypto_policy" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_ensure_gpgcheck_local_packages" selected="false"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_ensure_gpgcheck_globally_activated" selected="false"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_ensure_redhat_gpgkey_installed" selected="false"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_security_patches_up_to_date" selected="false"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_ensure_gpgcheck_never_disabled" selected="false"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_package_dnf-automatic_installed" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_group_updating" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_dnf-automatic_security_updates_only" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_timer_dnf-automatic_enabled" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_dnf-automatic_apply_updates" selected="true"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_ensure_gpgcheck_repo_metadata" selected="false"/>
+    <xccdf:select idref="xccdf_org.ssgproject.content_rule_clean_components_post_updating" selected="true"/>
   </xccdf:Profile>
 </xccdf:Tailoring>

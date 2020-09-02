@@ -1,0 +1,22 @@
+[Unit]
+Description=Kvarta
+After=network.target
+
+[Service]
+Type=forking
+
+User=kvarta
+Group=kvarta
+
+Environment="JAVA_HOME=/usr/java/latest"
+Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
+Environment="CATALINA_BASE=/opt/kvarta/tomcat"
+Environment="CATALINA_HOME=/opt/kvarta/tomcat"
+Environment="CATALINA_PID=/opt/kvarta/tomcat/temp/tomcat.pid"
+Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
+
+ExecStart=/opt/kvarta/tomcat/bin/startup.sh
+ExecStop=/opt/kvarta/tomcat/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target

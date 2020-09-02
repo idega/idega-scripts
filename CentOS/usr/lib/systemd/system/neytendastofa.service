@@ -1,0 +1,22 @@
+[Unit]
+Description=Neytendastofa
+After=network.target
+
+[Service]
+Type=forking
+
+User=neytendastofa
+Group=neytendastofa
+
+Environment="JAVA_HOME=/usr/java/latest"
+Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
+Environment="CATALINA_BASE=/opt/neytendastofa/tomcat"
+Environment="CATALINA_HOME=/opt/neytendastofa/tomcat"
+Environment="CATALINA_PID=/opt/neytendastofa/tomcat/temp/tomcat.pid"
+Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
+
+ExecStart=/opt/neytendastofa/tomcat/bin/startup.sh
+ExecStop=/opt/neytendastofa/tomcat/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target

@@ -3,6 +3,7 @@
 # Script finds new WAR files and moves it to Tomcat
 #
 WAR_FILE_OWNER=kvarta
+TOMCAT_HOME=/opt/$WAR_FILE_OWNER/tomcat
 SFTP_FOLDER=/var/local/sftp/$WAR_FILE_OWNER/wars
 
 if [ -z "$(ls -A $SFTP_FOLDER)" ]; then
@@ -13,17 +14,17 @@ else
                 echo "Processing update for $WAR_FILE_NAME ...";
 
                 echo "Removing old WAR... "
-                rm -rf ../webapps/$WAR_FILE_NAME*
+                rm -rf $TOMCAT_HOME/webapps/$WAR_FILE_NAME*
 
                 echo "Extracting $WAR_FILE_PATH file..."
-                unzip $WAR_FILE_PATH -d ../webapps/$WAR_FILE_NAME
+                unzip $WAR_FILE_PATH -d $TOMCAT_HOME/webapps/$WAR_FILE_NAME
 
                 echo "Touching files..."
-                find ../webapps/$WAR_FILE_NAME ! -name . -prune -type d -exec touch {} +
+                find $TOMCAT_HOME/webapps/$WAR_FILE_NAME ! -name . -prune -type d -exec touch {} +
 
                 echo "Restoring reading rights..."
-                chown -R $WAR_FILE_OWNER:$WAR_FILE_OWNER ../webapps/$WAR_FILE_NAME
-                restorecon -F -R ../webapps/$WAR_FILE_NAME
+                chown -R $WAR_FILE_OWNER:$WAR_FILE_OWNER $TOMCAT_HOME/webapps/$WAR_FILE_NAME
+                restorecon -F -R $TOMCAT_HOME/webapps/$WAR_FILE_NAME
 
                 echo "Removing $WAR_FILE_PATH file..."
                 rm -f $WAR_FILE_PATH
@@ -31,4 +32,4 @@ else
 fi
 
 echo "Starting server..."
-./startup.sh
+.$TOMCAT_HOME/bin/startup.sh
